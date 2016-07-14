@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>부드러운움직임 공식</title>
+<style>
+#pica{
+	/**/
+	width:100px;
+	position:absolute;
+	left:0px;
+	top:200px;
+}
+#wrapper{
+	width:100%;
+	height:1000px;
+}
+</style>
+<script>
+var pica;
+var targetX;
+var targetY;
+var a=0.5;
+var st;
+function init(){
+	pica=document.getElementById("pica");
+	setInterval("move()",50);
+}
+//목표지점- 비율계수*(목표지점-나의 위치)
+
+function destin(){
+	targetX=event.clientX;
+	targetY=event.clientY;
+}
+function move(){
+	//alert(pica.style.left);
+	
+	pica.style.left=targetX-a*(targetX-parseInt(pica.style.left))+"px";
+	pica.style.top=targetY-a*(targetY-parseInt(pica.style.top))+"px";
+	
+}
+</script>
+</head>
+<body onLoad="init()" onMouseMove="destin()">
+	<div id="wrapper" >
+		<img id="pica" src="../images/picha.jpg" style="position:absolute; left:0px; top:200px;">
+	</div>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>우주선 움직이기</title>
+<style>
+#stage{
+	height:800px;
+	margin:auto;
+
+}
+</style>
+<script src="../lib/Bullet.js"></script>
+<script src="../lib/Flame.js"></script>
+<script>
+var stage;
+var s;
+var Flame;
+var posX=0;
+var posY=0;
+window.addEventListener("load",function(){
+	stage=document.getElementById("stage");
+	stage.style.width="1000px";
+	s=new Ship(stage,100,60,100,200);
+	s.init();
+	Flame=new Flame(stage,80,50,s.left-parseInt(s.img.style.width),s.top)
+	Flame.init();
+	
+});
+//키보드 이벤트
+window.addEventListener("keydown",function(){
+	if(event.keyCode==32){
+		//var x=s.left+parseInt(s.style.width)/2;
+		//var y=s.top+parseInt(s.style.height)/2;
+		var b=new Bullet(stage,s.left,s.top);
+		b.init();
+	}else if(event.keyCode==37){//좌측으로
+		s.left-=10;
+		Flame.x-=10;
+		Flame.go();
+		s.go();
+	}else if(event.keyCode==38){//위쪽으로
+		s.top-=10;
+		Flame.y-=10;
+		Flame.go();
+		s.go();
+	}else if(event.keyCode==39){//우측으로
+		//우주선의 x좌표를 증가
+		s.left+=10;
+		Flame.x+=10;
+		Flame.go();
+		s.go();
+	}else if(event.keyCode==40){//아래쪽으로
+		s.top+=10;
+		Flame.y+=10;
+		Flame.go();
+		s.go();
+	}
+	s.img.style.left=parseInt(s.img.style.left)+posX+"px";
+	s.img.style.top=parseInt(s.img.style.top)+posY+"px";
+	
+});
+var Ship=function(stage,w,h,t,l){
+	this.width=w;
+	this.height=h;
+	this.top=t;
+	this.left=l;
+	this.img;
+	this.area=stage;
+		this.init=function(){
+		this.img=document.createElement("img");
+		this.img.src="../images/paceship.png";
+		this.img.style.position="absolute";
+		this.img.style.left=this.left+"px";
+		this.img.style.top=this.top+"px";
+		this.img.style.width=this.width+"px";
+		this.img.style.height=this.height+"px";
+		this.area.appendChild(this.img);
+}
+	this.go=function(){
+		this.img.style.left=this.left+"px";
+		this.img.style.top=this.top+"px";
+	}
+	this.move=function(){
+		
+	}
+	
+	
+}
+</script>
+</head>
+<body>
+	<div id="stage">
+	</div>
+</body>
+</html>
+

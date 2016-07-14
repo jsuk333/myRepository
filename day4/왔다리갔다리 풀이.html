@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>왔다리갔다리 풀이</title>
+<style>
+#star{
+	position:absolute;
+	left:200px;
+	top:200px;
+}
+</style>
+<script>
+var x=200;
+var forward=true;
+//문서내의 누구를 ??? star라는 text를 왔다갔다시키자.....
+function move(){
+	(forward)?x+=10:x-=10;
+	//단, 내가 원하는 특정 값에 도달하면, forwad를 뒤집자!
+	if(x==300||x==100){
+		forward=!forward;
+	}
+	document.getElementById("star").style.left=x+"px";
+	setTimeout("move()",500);
+}
+</script>
+</head>
+<body>
+<input type="button" value="이동" onClick="move()">
+<br>
+<span id="star">★</span>
+
+</body>
+</html>

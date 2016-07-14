@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>스탑워치</title>
+<style>
+	#txt{
+		width:200px;
+		height:100px;
+		font-size:40pt;
+		text-align:right;
+		font-weight:bold;
+		color:red;
+		background:yellow;
+	}
+</style>
+<script>
+var s=0;
+var m=0;
+var h=0;
+var ss="";
+var mm="";
+var hh="";
+var st
+function init(){
+	document.getElementById("txt").value="00:00:00";
+}
+//txt의 기존 값을 증가값으로 대입
+function start(){
+	ss++;
+	if(s==60){
+		ss="00";
+		m++;
+	}
+	if(m==60){
+		mm="00";
+		h++;
+	}
+
+	if(s<10){
+		ss="0"+s;
+	}else{
+		ss=""+s;
+	}
+	if(m<10){
+		mm="0"+m;
+	}else{
+		mm=""+m;
+	}
+	if(h<10){
+		hh="0"+h;
+	}else{
+		hh=""+h;
+	}
+	console.log(ss);
+
+	document.getElementById("txt").value=hh+":"+mm+":"+ss;
+	st=setTimeout("start()",50);
+	//버튼을 못 누르게 비활성화
+	document.getElementById("bt_start").disabled=true;
+}
+function temp_stop(){
+	clearTimeout(st);//기존 setTimeout에 의한 자동호출을 정지
+	init();
+	document.getElementById("bt_start").disabled=false;
+}
+function stop(){
+	clearTimeout(st);//기존 setTimeout에 의한 자동호출을 정지
+	document.getElementById("bt_start").disabled=false;
+}
+</script>
+</head>
+<body onLoad("init()")>
+	<input type="text" value=0 id="txt">
+	<br>
+	<input type="button" value="시작" onClick="start()" id="bt_start">
+	<input type="button" value="일시정지" onClick="temp_stop()" id="bt_temp">
+	<input type="button" value="정지" onClick="stop()" id="bt_stop">
+</body>
+</html>

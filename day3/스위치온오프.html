@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>스위치온오프</title>
+<script>
+var flag=true;
+function switchOn(){
+	//문서에 적용된 수타일 백그라운드를 노란색으로 적용한다.
+	document.body.style.background="yellow";
+	flag=true;
+}
+function switchOff(){
+	//문서에 적용된 수타일 백그라운드를 검정색으로 적용한다.
+	document.body.style.background="black";
+	flag=false;
+}
+function toggle(){
+	//(flag)?switchOff():switchOn();
+	if(flag){
+		switchOff();
+	}else{
+		switchOn();
+	}
+}
+</script>
+<style>
+	/*누구를 어떻게 해야 할지에 대한 문법으로 구성됨
+	
+	*/
+	body{
+		background:yellow;
+	}
+	input{
+		width:200px;
+		height:60px;
+		background:#ffcc00;
+		font-size:20pt;
+		color:#006600;
+		font-weight:bold;
+	}
+</style>
+</head>
+<body>
+	<input type="button" value="on" onClick="switchOn()">
+	<input type="button" value="off" onClick="switchOff()">
+	<input type="button" value="OneTouch" onClick="toggle()">
+</body>
+</html>

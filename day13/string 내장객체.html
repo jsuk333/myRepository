@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>string 내장객체</title>
+<style>
+</style>
+<script>
+/*
+	자바스크립트도 자체적으로 내장된 객체가 몇개 있는데 그 중 String객체를 학습한다.
+	주의) 모든 객체가 생성시 new 를 의무하는 것이 아니다.
+	명시적(explict) 암시적,묵시적(implict)
+*/
+var str="지난,,, 여름에 찍은 사진.jpg";
+var b="test.png";
+var a="대한민국국국국국";//암시적, 묵시적 생서법
+//문자열의 길이를 출력하시오
+/*
+document.write("문자열의 길이는 "+a.length+"<br>");
+document.write("대한민국의 2번째 문자는"+a.charAt(1)+"<br>");
+for(var i=0;i<a.length;i++){
+	document.write(a.charAt(i));
+}
+document.write("<br>");
+//원하는 문자의 인덱스를 구하시오
+document.write(a.indexOf("국")+"<br>");
+document.write(a.lastIndexOf("국")+"<br>");
+
+//document.write(a.replace("대","무지큰"));
+var str="지난,,, 여름에 찍은 사진.jpg";
+document.write(str.substring(str.indexOf("여름"),str.indexOf("여름")+2)+"<br>");
+document.write(str.substring(str.lastIndexOf(".")+1,str.length)+"<br>");*/
+//var bArray=b.split(".");
+//document.write(bArray[0]+"<br>"+bArray[1]);
+//var s1=b.toUpperCase()
+//테스트 png를 대문자로 변환
+//document.write(s1);
+//대부문의 객체지향 언어에서는 일단 한번 메모리에 올라온 스트링 객체는 변경이 불가능 하다.
+var c="      King";
+
+//공백 제거 전 길이
+document.write(c.length+"<br>");
+//공백 제거 후 길이
+var s2=c.trim();
+document.write(s2.length);
+</script>
+</head>
+<body>
+</body>
+</html>

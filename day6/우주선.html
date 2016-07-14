@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+/*body 태그는 기본적으로 내용물과 조금 마진을 둠으로 그값을 없애자*/
+body{
+	margin:0px;
+}
+#bg{
+	height:500px;
+	width:1000px;
+	background:url("../images/background.png") ;
+	background-repeat:repeat-x;
+	}
+	#ship{
+		position:absolute;
+		width:100px;
+		height:100px;
+		left:0px;
+		top:300px;
+	}
+	/*총알을 화면에서 안보이게 하려면 left값을 음수로*/
+	#bullet{
+		position:absolute;
+		width:10px;
+		height:10px;
+		top:300px;
+		left:-10px;
+	}
+</style>
+<script>
+var x=0;
+var posX=0;
+var posY=300;
+var bullet_pos_x=0;
+var st;
+//문서가 로드 돼면 , 배경을 x축으로 움직이자
+function init(){
+	x-=1;
+	document.getElementById("bg").style.backgroundPosition=x+"px 0px";
+	setTimeout("init()",20);
+
+}
+//방향키 4개에 대해서만 반응을 보이자
+//우리가 입력한 키를 10진수로 변환한 코드체계가 중간에 관여한다. 이걸 아스키 코드라 한다.
+function joyStic(){
+	var key=event.keyCode;// 우리가 누른 키보드값에 대응하는 아스키 값 반환
+	var ship=document.getElementById("ship");
+	var bullet=document.getElementById("bullet");
+	if(key==37){//left 음수값으로 누적
+		posX-=10;
+	}else if(key==38){//up 음수값으로 누적
+		posY-=10;
+	}else if(key==39){//right  양수값으로 누적
+		posX+=10;
+	}else if(key==40){//down 양수값으로 누적
+		posY+=10;
+	}
+	//스페이스 바를 누르면 총알 발사
+	if(key==32){//총알의 left 값을 증가 시키자
+		fire();	
+	}
+	ship.style.left=posX+"px";
+	ship.style.top=posY+"px";
+}
+function fire(){//총알이 날아가는 효과를 주기 위한 함수
+	bullet_pos_x+=50;
+	document.getElementById("bullet").style.top=(posY+50)+"px";
+	
+	bullet.style.left=bullet_pos_x+"px";
+	st=setTimeout("fire()",100);
+	if(parseInt(bullet.style.left)==900){
+		clearTimeout(st);
+		bullet.style.left="-10px";
+		bullet_pos_x=0;
+		console.log(bullet.style.left);
+	}
+		console.log(bullet.style.left);
+}
+</script>
+
+</head>
+<body onLoad="init()" onKeyDown="joyStic()">
+<div id="bg" >
+	<img id="ship" src="../images/paceship.png">
+	<img id="bullet" src="../images/bullet.png">
+</div>
+</body>
+</html>

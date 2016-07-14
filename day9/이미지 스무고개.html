@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>이미지 스무고개</title>
+<script src="../lib/Puzzle.js"></script>
+<script>
+var stage;
+var bg=["red","orange","yellow","green","blue","navy","purple"];
+	window.addEventListener("load",function(){
+		stage=document.createElement("div");
+		stage.style.width="800px";
+		stage.style.height="800px";
+		stage.style.backgroundImage="url(\"../images/han.jpg\")";
+		stage.style.margin="auto";
+		document.body.appendChild(stage);
+		createBox();
+	});
+	//다량의 div를 생성하자
+	function createBox(){
+		for(var i=0;i<64;i++){
+			var j=parseInt(Math.random()*bg.length);
+			var p=new Puzzle(stage,98,98,bg[j]);
+			p.init();
+			
+		}
+	}
+</script>
+</head>
+<body>
+</body>
+</html>

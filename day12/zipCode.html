@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>우편번호 검색</title>
+<style>
+</style>
+<script>
+function setPost(zip,addr){
+	//새창에서 선택한 우편번호 텍스트를, 부모 윈도우의 우편번호 입력란에 채워넣고 첫번째 주소도 채워넣기
+	var arr=zip.split("-");
+	opener.document.form1.zipcode1.value=arr[0];
+	opener.document.form1.zipcode2.value=arr[1];
+	opener.document.form1.addr1.value=addr;
+	window.close();//현재창 닫기
+	opener.document.form1.addr2.focus();
+
+}
+</script>
+</head>
+<body bgcolor="yellow">
+	<table width="100%" border="1px">
+		<tr>
+		<td colspan="2"><input type="text"><img src="/images/search_bt.png" width="30px" height="30px" onClick=""></td>
+		</tr>
+		<tr>
+			<td>우편번호</td>
+			<td>주소</td>
+		</tr>
+		<tr onMouseOver="this.style.background='#ffffcc'" onMouseOut="this.style.background=''">
+			<td><a href="javascript:setPost('789-142','서울시 강남구 역삼동 쿠쿠빌딩')">789-142</a></td>
+			<td>서울시 강남구 역삼동 쿠쿠빌딩</td>
+		</tr>
+		<tr onMouseOver="this.style.background='#ffffcc'" onMouseOut="this.style.background=''">
+			<td><a href="">622-733</a></td>
+			<td>구리시 인창동  한일 빌딩</td>
+		</tr>
+		<tr onMouseOver="this.style.background='#ffffcc'" onMouseOut="this.style.background=''">
+			<td><a href="">245-833</a></td>
+			<td>서울시 동작구 중앙동 타타빌딩</td>
+		</tr>
+		<tr onMouseOver="this.style.background='#ffffcc'" onMouseOut="this.style.background=''">
+			<td><a href="">146-832</a></td>
+			<td>서울시 광진구 화양동 파파빌딩</td>
+		</tr>
+		<tr onMouseOver="this.style.background='#ffffcc'" onMouseOut="this.style.background=''">
+			<td><a href="">664-521</a></td>
+			<td>서울시 송파구 잠실동 다다빌딩</td>
+		</tr>
+		<tr onMouseOver="this.style.background='#ffffcc'" onMouseOut="this.style.background=''">
+			<td><a href="">733-562</a></td>
+			<td>성남시 분당구 구구동 유유빌딩</td>
+		</tr>
+	</table>
+</body>
+</html>

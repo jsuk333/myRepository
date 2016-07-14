@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>화면에 도장찍기</title>
+<style>
+body{
+	margin:0px;
+}
+#wrapper{
+	height:800px;
+	background:#ffffcc;
+	
+}
+</style>
+<script>
+var arr=new Array();
+var count=0;
+var wrapper;
+var x;
+var y;
+var w=40;
+var h=40;
+//문서가 로드 되면 초기화 작업을 하자
+function init(){
+	wrapper=document.getElementById("wrapper");
+}
+//마우스를 클릭하면, 동적으로(=runtime  실행시) 원하는 태그를 올려놓자
+function stamp(){
+	//alert("");
+	x = event.clientX;     // Get the horizontal coordinate
+	y = event.clientY;     // Get the vertical coordinate
+	//wrapper.innerHTML="<img src=\"../images/stamp.png\">"; 
+	//top=\""+x+"px\""+ "left=\""+y+"px\">");
+	//결론,, 문자열로 도장찍기에는 한계가 있따.
+	//위치 문제도 그렇고 누적부분도 그롷고
+	//문서내의 태그를 생성하여 부착하자
+	var img=document.createElement("img");
+	img.src="../images/stamp.png";
+	img.style.width=w+"px";
+	img.style.heigth=h+"px";
+	img.style.position="absolute";
+	img.style.left=x-w/2+"px";
+	img.style.top=y-w/2+"px";
+	//문서에 부착한다.
+wrapper.appendChild(img);
+	var pos=[x,y];
+	arr[count]=pos;
+	console.log(arr[count]);
+	count++;
+	img.style.left=x-w/2+"px";
+	img.style.top=y-w/2+"px";
+	
+}
+function start(){
+	
+}
+</script>
+</head>
+<body onLoad=init(); onMouseDown="stamp()">
+	<div id="wrapper">
+		<img src="../images/paceship.png">
+	</div>
+	<input type="button" onClick="start()">
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>과일명출력하기</title>
+<script>
+
+var n=new Array(20);
+for(var i=0;i<n.length;i++){
+	if(i<10){
+		n[i]=0;
+	}else{
+		n[i]=1;
+	}
+}
+for(var i=0;i<n.length;i++){
+	document.write(n[i]+"<br>");
+}
+
+
+</script>
+</head>
+<body>
+</body>
+</html>

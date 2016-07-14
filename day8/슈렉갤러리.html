@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>슈렉갤러리</title>
+<style>
+#box{
+	position:relative;
+	height:340px;
+	top:0px;
+}
+#mask{
+	width:500px;
+	height:340px;
+	overflow:hidden;
+	
+}
+#wrapper{
+	width:500px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:200px;
+	text-align:center;
+	font-size:15pt;
+}
+a{
+	text-decoration:none;
+	color:#000000;
+}
+/*a태그에 마우스 올려 놓으면*/
+a:hover{
+	color:#ffff33;
+}
+</style>
+<script>
+var imgArray=["../images/shurek/img0.jpg","../images/shurek/img1.jpg","../images/shurek/img2.jpg","../images/shurek/img3.jpg","../images/shurek/img4.jpg","../images/shurek/img5.jpg","../images/shurek/img6.jpg"];
+var box;
+var aArray=new Array(imgArray.length);
+var wrapper;
+var a=0.9;//부드러운 정도
+var targetX=0;//박스가 도달하게 될 목표지점
+function init(){
+	wrapper=document.getElementById("wrapper");
+	box=document.getElementById("box");
+	box.style.width=500*imgArray.length+"px";
+	box.style.left="0px";
+	setImg();	
+	setHref();
+	move();
+}
+function setImg(){
+	for(var i=0;i<imgArray.length;i++){
+		var img=document.createElement("img");
+		img.src=imgArray[i];
+		box.appendChild(img);
+
+	}
+}
+function setHref(){
+	for(var i=0;i<aArray.length;i++){
+		var a=document.createElement("a");
+		a.innerText="●";
+		a.href="javascript:showImg("+i+")";
+		aArray[i]=a;
+		wrapper.appendChild(a);
+	}
+}
+function showImg(pos){
+	targetX=pos*(-500);
+}
+function move(){
+	box.style.left=((targetX)-a*(targetX-parseFloat(box.style.left)))+"px";
+	console.log(box.style.left);
+	setTimeout("move()",10);
+}
+</script>
+</head>
+<body onLoad="init()">
+<div id="wrapper">
+<div id="mask">
+	<div id="box">
+	</div>
+</div >
+</div>
+</body>
+</html>

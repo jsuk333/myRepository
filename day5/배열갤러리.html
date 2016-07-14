@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+	#wrapper{
+		border:2px solid silver;
+		width: 600px;
+		height:800px;
+		margin:auto;
+	}
+
+	#controller{
+		border:1px solid gold;
+		width:99.5%;
+		height:100px;
+		text-align:center;
+		background:gold;
+	}
+	#panel{
+		width:99%;
+		height:500px;
+		text-align:center;
+	}
+	#grim{
+		width:99%;
+	}
+	#bt_prev{
+		height:99%;
+		transform:rotate(180deg);
+	}
+	#bt_next{
+	height:99%;
+	}
+	#thumb_table{
+		width:100%;
+		height:60px;
+	}
+</style>
+<script>
+var photo=new Array();
+photo[0]="speed.jpg";
+photo[1]="mouse.jpg";
+photo[2]="fag.jpg";
+photo[3]="future.jpg";
+photo[4]="red.jpg";
+photo[5]="superior.jpg";
+photo[6]="suv.jpg";
+photo[7]="tou.jpg";
+photo[8]="white.jpg";
+photo[9]="aero.jpg";
+var count=0;
+function init(){
+	var grim=document.getElementById("grim");
+	grim.src="../images/speed.jpg";
+}
+function prev(){
+	count--;
+	if(count>=0){
+		grim.src="../images/"+photo[count];
+	}else{
+		count=0;
+		alert("이 사진이 첫 그림입니다.");
+	}
+}
+function next(){
+	count++;
+	if(count<photo.length){
+		
+		grim.src="../images/"+photo[count];
+	}else{
+	count=photo.length-1;
+		alert("이 사진이 마지막 그림입니다.");
+	}
+}
+
+</script>
+</head>
+<body onLoad="init()">
+	<div id="wrapper">	
+	<div id="panel">
+		<img id="grim" src="../images/speed.jpg">
+	</div>
+		<div id="controller">
+			<img id="bt_prev" src="../images/bt.png" onClick="prev()">
+			<img id="bt_next" src="../images/bt.png" onClick="next()">
+		</div>
+		<div id="thumb_wrapper">
+			<table id="thumb_table" border="1px">
+				<tr>
+					<td id="prev2"></td>
+					<td id="prev1"></td>
+					<td id="curr"></td>
+					<td id="next1"></td>
+					<td id="next2"></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</body>
+</html>

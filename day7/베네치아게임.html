@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>베네치아 게임</title>
+<style>
+#wrapper{
+	width:900px;
+	height:800px;
+	margin:auto;
+}
+#stage{
+	width:100%;
+	background:#ffffcc;
+	background-repeat:no-repeat;
+}
+#controller{
+	width:100%;
+	height:150px;
+	/*background:#ffcc66;*/
+	text-align:center;
+}
+#hp{
+	width:176px;
+	height:162px;
+	background:green;
+	margin:0px;
+	float:left;
+}
+#keyword{
+	width:250px;
+	height:50px;
+	background:#ccffff;
+	font-size:35pt;
+}
+#info{
+	width:400px;
+	height:162px;
+	/*background:blue;*/
+	margin:0px;
+	float:left;
+}
+
+</style>
+<script>
+var hp;
+var floorArray=new Array();//층수 배열
+var word=["남산", "자동차","바람","냉면","책상","전화기","이름","안경","집","하늘",];
+var stage;
+var wordArray=new Array(word.length);
+var step=10;
+var st;//셋타임 아웃을 제어하는 변수
+var keyword;//단어 입력 폼
+var jumsu;
+var score=0;
+var limit;//축의 한계점;
+
+function init(){
+	hp=document.getElementById("hp");
+	//문서가 로드 되면 hp가 표현되는 테이블을 3X4으로 구성해보자
+	stage=document.getElementById("stage");
+	keyword=document.getElementById("keyword");
+	jumsu=document.getElementById("jumsu");
+	createHp();//체력 생성및 보여 주기
+	createTag();//단어 생성 보여주기
+	limit=parseInt(stage.style.height)-40;
+}
+
+function createHp(){
+	var table=document.createElement("table");
+	//테이블 조립하기
+	//hp div에 table추가
+	var s;
+	hp.appendChild(table);
+	table.style.border="1px solid red";
+	for(var i=0;i<3;i++){
+		var tr=document.createElement("tr");
+		table.appendChild(tr);
+		var hoArray=new Array(4);//호수 배열
+		for(var j=0;j<4;j++){
+			var td=document.createElement("td");
+			tr.appendChild(td);
+			td.style.width=50+"px";
+			td.style.height=50+"px";
+			td.style.background="yellow";
+			hoArray[j]=td;
+		}
+		//작은 상자를 큰상자에 담자
+		floorArray[i]=hoArray;
+		//alert(floorArray[i]);
+	}
+}
+//게임이 시작하면, 단어들이 등장하되, 점점 내려오게.... top값이 증가되게
+	
+function gameStart(){
+	//span 태그를 단어만큼 생성하여 stage에 부착하자
+	
+	drop();
+	keyword.focus();
+}
+
+function createTag(){
+	for(var i=0;i<word.length;i++){
+		var r=parseInt(Math.random()*100);
+		console.log(r);
+		var span=document.createElement("span");
+		span.style.position="relative";//절대좌표는 바디 기준의 좌표
+		span.style.left=(50*i)+"px";
+		span.style.top=(-r-20)+"px";
+		span.innerText=word[i];
+		stage.appendChild(span);
+		//span은 지역변수이기 때문에 for문이 끝난 후에는 접근할 수 없다.
+		//따라서 전역배열에 담아두어야 한다.
+		wordArray[i]=span;
+	}
+}
+//텍스트 내려오는 효과 
+function drop(){
+	//step+=10;
+	for(var i=0;i<wordArray.length;i++){
+		wordArray[i].style.top=parseInt(wordArray[i].style.top)+step+"px";
+	}
+	//현재 내려오고 있는 단어가 limit를 넘어섰는가?
+	if(parseInt(wordArray[1].style.top)>=limit){
+		floorArray[0][0].style.background="white";
+		wordArray[i].innerText="";
+	}
+	var level=document.getElementById("speed").value;
+	console.log(level);
+	st=setTimeout("drop()",level);//문서내의 셀렉트의 값 접근하기
+}
+// 잠시 중지
+function pause(){
+	clearTimeout(st);
+}
+//여러 키보드 값 중 엔터키값 에만 반응을 보이자
+function enter(){
+	var key=event.keyCode;
+	if(key==13){
+		for(var i=0;i<word.length;i++){
+			if(word[i]==keyword.value){
+				score+=10;
+				wordArray[i].innerText="";//stage.removeChild(wordArray[i]);
+				jumsu.value=score+"점";
+				break;
+			}
+		}
+		keyword.value=""; //방금 입력한 텍스트 지우기
+	}
+}
+</script>
+</head>
+<body onLoad="init()">
+	<div id="wrapper">
+		<div id="stage" style="height:650px;">
+		</div>
+		<div id="controller">
+			<div id="info">
+				<select id="speed">
+					<option value="1500">1단계</option>
+					<option value="1200">2단계</option>
+					<option value="900">3단계</option>
+					<option value="600">4단계</option>
+					<option value="100">5단계</option>
+				</select>
+				<input type="button" value="start" onClick="gameStart()">
+				<input type="button" value="pause" onClick="pause()">
+				<input type="text" value="0 점" size="5" id="jumsu"><br>
+				<input type="text" value="" id="keyword" onKeyup="enter()">
+			</div>
+			<div id="hp"></div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+	//버튼을 누르면, 카운트 값을 1씩 증가시켜, 텍스트 입력 상자에 뿌리자!!
+		document.getElementById("txt").value;
+		function count(){
+			
+		}	
+	</script>
+</head>
+<body>
+	<input type="text" value="0" id="txt">
+	<input type="button" value="카운트 증가" onClick="add()">
+</body>
+</html>
+<script>
+	var x=0;
+	
+
+	//버튼을 누르면, 수행할 코드 영역
+	function add(){
+		x=document.getElementById("txt").value;
+		document.getElementById("txt").value=(x%5)+1;
+		x++;
+	}
+
+</script>

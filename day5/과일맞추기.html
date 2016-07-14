@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+#wrapper{
+	border: 2px solid red;
+	width:400px;
+	height:500px;
+	margin:auto;
+}
+#word_view{
+	width:100%;
+	height:120px;
+	background:#33ffff;
+	font-size:50pt;
+	text-align:center;
+}
+#word_input{
+	width:99%;
+	height:90px;
+	background:yellow;
+	font-size:40pt;
+}
+#feedback{
+	width:100%;
+	height:200px;
+	font-size:120pt;
+	color:red;
+	text-align:center;
+	font-weight:bold;
+}
+#score{
+	width:100%;
+	height:70px;
+	font-size:50pt;
+	text-align:center;
+}
+</style>
+<script>
+	var w=new Array();
+	w[0]="광화문";
+	w[1]="마우스";
+	w[2]="택시";
+	w[3]="몽당연필";
+	w[4]="무지개";
+	w[5]="사과";
+	w[6]="서울시";
+	w[7]="대한민국";
+	w[8]="한글";	
+	w[9]="공주";
+	var count;
+	var jumsu;
+function init(){
+	//게임에 사용할 단어를 메모리에 미리 확보해야 한다.
+
+	var word_view=document.getElementById("word_view")
+	word_view.innerText=w[0];
+	//커서 올려놓기
+	var word_input=document.getElementById("word_input");
+	word_input.focus();//커서 올려놓는 기능의 함수 호출~~!
+	var score=document.getElementById("score");
+	count=0;
+	jumsu=0;
+}
+//키보드를 눌렀다 땠을 때
+function enter(){
+	var key=event.keyCode;//사용자가 입력한 키보드의 아스키값 반환
+	//alert("당신이 입력한 키보드의 아스키 값은"+key);
+	if(key==13){
+		if(word_view.innerText==word_input.value){
+			jumsu+=10;		
+			document.getElementById("feedback").innerText="O";
+		}else{
+			document.getElementById("feedback").innerText="X";
+		}
+		
+		score.innerText=jumsu+" 점";
+		word_input.value="";
+		count++;
+		
+		if(count<10){
+			word_view.innerText=w[count];
+		}else{
+			word_view.innerText="";
+			score.innerText="0 점";
+			alert("당신의 점수는 "+jumsu+" 점 입니다.");
+			init();
+		}
+		
+	}
+}
+
+</script>
+</head>
+<body onLoad="init()">
+<div id="wrapper">
+	
+	<div id="word_view"></div>
+	<input type="text" id="word_input" onKeyUp="enter()">
+	<div id="feedback"></div>
+	<div id="score">0 점</div>
+
+</div>
+</body>
+</html>

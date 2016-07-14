@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>체크박스일괄처리</title>
+<style>
+</style>
+<script>
+
+//문서내의 ch 라는 체크박스의 상태를 , 보스의 상태와 일치시키자
+function checkAll(){
+	var ch=document.getElementsByName("ch");
+	var boss=document.getElementById("boss");
+	for(var i=0;i<ch.length;i++){
+		ch[i].checked=boss.checked;
+	}
+}
+</script>
+</head>
+<body>
+	<input type="checkbox" id="boss" onclick="checkAll()">대표
+	<p>
+
+	<input type="checkbox" name="ch"><br>
+	<input type="checkbox" name="ch"><br>
+	<input type="checkbox" name="ch"><br>
+	<input type="checkbox" name="ch"><br>
+	<input type="checkbox" name="ch"><br>
+	<input type="checkbox" name="ch"><br>
+	<input type="checkbox" name="ch"><br>
+	<input type="checkbox" name="ch"><br>
+
+
+
+</body>
+</html>

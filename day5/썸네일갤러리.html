@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>썸네일갤러리</title>
+<style>
+div{
+	border: 2px solid red;
+	width:600px;
+	height:650px;
+	margin:auto;
+}
+</style>
+<script>
+function setImg(img){
+	document.getElementById("big").src=img
+	//"../images/image"+img+".jpg";
+}
+</script>
+</head>
+<body>
+<div>
+	<table width="100%">
+		<tr>
+			<td><img src="../images/image1.jpg" width="50px" onMouseOver="setImg(this.src)"></td>
+			<td><img src="../images/image2.jpg" width="50px" onMouseOver="setImg(this.src)"></td>
+			<td><img src="../images/image3.jpg" width="50px" onMouseOver="setImg(this.src)"></td>
+			<td><img src="../images/image4.jpg" width="50px" onMouseOver="setImg(this.src)"></td>
+			<td><img src="../images/image5.jpg" width="50px" onMouseOver="setImg(this.src)"></td>
+			<td><img src="../images/image6.jpg" width="50px" onMouseOver="setImg(this.src)"></td>
+			<td><img src="../images/image7.jpg" width="50px" onMouseOver="setImg(this.src)"></td>
+			<td><img src="../images/image8.jpg" width="50px" onMouseOver="setImg(this.src)"></td>
+			<td><img src="../images/image9.jpg" width="50px" onMouseOver="setImg(this.src)"></td>
+			<td><img src="../images/image10.jpg" width="50px" onMouseOver="setImg(this.src)"></td>
+		</tr>
+	</table>
+	<img src="../images/image1.jpg" width="100%" id="big">
+</div>
+</body>
+</html>

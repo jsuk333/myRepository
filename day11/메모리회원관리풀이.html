@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>메모리회원관리풀이</title>
+<style>
+#wrapper{
+	width:650px;
+	height:600px;
+	border:2px solid red;
+	margin:auto;
+}
+#leftSide{
+	width:150px;
+	height:600px;
+	background:#ffff99;
+	float:left;
+}
+#rightSide{
+	width:500px;
+	height:600px;
+	background:#ccff99;
+	float:left;
+}
+#upSide{
+
+	width:100%;
+	height:30px;
+	background:#ff99ff;
+	text-align:center;
+}
+#downSide{
+	width:100%;
+	height:570px;
+	overflow:scroll;
+}
+ul{
+	/*도트 없애기*/
+	list-style:none;
+	border:1px solid black;
+	padding:10px;
+}
+/*모든 텍스트 박스의 크기 조정*/
+/*스타일 시트에서 점을 찍어서 나만의 스타일 클래스 정의할 수 있다.*/
+.inputStyle{
+	width:100px;
+	border:1px solid gray;
+}
+
+</style>
+<script src="./Member.js"></script>
+<script>
+var txt_id,txt_pw,txt_name,txt_money,txt_keyword;
+var bt_regist, bt_getList,bt_search;
+var memberList=new Array();// 회원정보를 넣을 공간
+var downSide;
+var table;
+window.addEventListener("load",function(){
+	txt_id=document.getElementById("txt_id");
+	txt_pw=document.getElementById("txt_pw");
+	txt_name=document.getElementById("txt_name");
+	txt_money=document.getElementById("txt_money");
+	txt_keyword=document.getElementById("txt_keyword");
+	downSide=document.getElementById("downSide");
+
+	bt_regist=document.getElementById("bt_regist");
+	bt_getList=document.getElementById("bt_getList");
+	bt_search=document.getElementById("bt_search");
+	bt_regist.addEventListener("click",function(){
+		regist();
+		reset();
+	});
+
+	bt_getList.addEventListener("click",function(){
+		clearList();
+		createTitle();
+		getList();
+		
+		
+	});
+
+bt_search.addEventListener("click",function(){
+		getListBySearch();
+	});
+	createTitle();
+
+});
+function regist(){
+	//한사람에 대한 정보는 클래스로 부터 하나의 인스턴스를 생성하여, 데이터를 담아 놓기...
+	var member=new Member();
+	member.id=txt_id.value;
+	member.pw=txt_pw.value;
+	member.name=txt_name.value;
+	member.money=parseInt(txt_money.value);
+	memberList.push(member);
+}
+function clearList(){
+	//기존 테이블에 append 되어있던 하위요소들을 싹 지우자!
+	table.innerHTML="";
+	downSide.removeChild(table);
+}
+function getList(){
+	//우측에 존재하는 테이블에 회원수 만큼의 테이블을 추가
+	//전체 회원수를 출력해본다.
+	var sum=0;
+	for(var i=memberList.length-1;i>=0;i--){
+		var member=memberList[i];
+		var tr=document.createElement("tr");
+		var td_no=document.createElement("td");
+		var td_id=document.createElement("td");
+		var td_pw=document.createElement("td");
+		var td_name=document.createElement("td");
+		var td_money=document.createElement("td");
+		
+		td_no.innerText=i+1;
+		td_id.innerText=member.id;
+		td_pw.innerText=member.pw;
+		td_name.innerText=member.name;
+		td_money.innerText=member.money;
+		
+		tr.appendChild(td_no);
+		tr.appendChild(td_id);
+		tr.appendChild(td_pw);
+		tr.appendChild(td_name);
+		tr.appendChild(td_money);
+		table.appendChild(tr);
+		
+		sum+=member.money;
+		console.log("id 는"+member.id+" pw는 "+member.pw+ "이름은 "+ member.name+ " 낸돈은 "+member.money);
+	}
+
+	//합계 tr추가 colspan 5  우측정렬
+	var tr_sum=document.createElement("tr");
+	var td_sum=document.createElement("td");
+	td_sum.colSpan="5";
+	td_sum.style.textAlign="right";
+	td_sum.innerText="합계 : "+ sum+"원";
+	tr_sum.appendChild(td_sum);
+	table.appendChild(tr_sum);
+}
+function getListBySearch(){
+	var resultList=new Array();//검색결과를 담을 배열
+	for(var i=memberList.length-1;i>=0;i--){
+		var member=memberList[i];
+
+		//검색 결과가 있다면
+		if(txt_keyword.value==member.id){
+			//alert("배열 내의"+i+"번째 인물의 "+member.id+"를 검색함");
+			resultList.push(member);
+		}
+	}
+	//getList함수가 사용중인 memberList를 result로 변경
+		memberList=resultList;
+		clearList();
+		createTitle();
+		getList();
+
+}
+
+//테이블 제목 생성
+
+function createTitle(){
+	//columnTitle배열
+	var coumnTitle=["No","ID","Password","Name","Money"];
+	table=document.createElement("table");
+	table.style.border="1px solid black";
+	table.style.width="100%";
+
+	var tr=document.createElement("tr");
+	tr.style.textAlign="center";
+	for( var i=0;i<coumnTitle.length;i++){
+		var td=document.createElement("td");
+		td.innerText=coumnTitle[i];
+		tr.appendChild(td);
+	}
+	table.appendChild(tr);
+	//div에 테이블 부착
+	downSide.appendChild(table);
+}
+//등록후, 등록 폼을 다시 초기화 하기!!
+function reset(){
+	txt_id.value="";
+	txt_pw.value="";
+	txt_name.value="";
+	txt_money.value="";
+}
+
+
+
+
+</script>
+</head>
+<body>
+	<div id="wrapper">
+		<div  id="leftSide">
+			<ul>
+				<li>ID : <input type="text" class="inputStyle" id="txt_id"></li>
+				<li>이름 : <input type="text"class="inputStyle" id="txt_pw"></li>
+				<li>낸돈 : <input type="text"class="inputStyle"id="txt_name"></li>
+				<li>성금 : <input type="text"class="inputStyle"id="txt_money"></li>
+				<li><input type="button" value="등록" id="bt_regist">
+					<input type="button" value="조회" id="bt_getList">
+				</li>
+			</ul>
+		</div>
+		<div id="rightSide">
+			<div id="upSide">
+				<input type="text" id="txt_keyword">
+				<input type="button" value="검색" id="bt_search">
+			</div>
+			<div id="downSide">
+			</div>
+		</div>
+
+	</div>
+</body>
+</html>

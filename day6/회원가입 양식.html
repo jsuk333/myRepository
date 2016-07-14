@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>회원가입 양식</title>
+<script>
+function loginCheck(){
+	//아이디와 비밀번호가 적절하게 된지 유효성체크를 한다.
+	if(document.getElementById("member_id").value==""){
+		alert("아이디 입력해");
+		document.getElementById("member_id").focus();
+		return;
+	}else if(!document.getElementById("member_pw").value){
+		alert("비번");
+		document.getElementById("member_pw").focus();
+		return;//실행부로 하여금 호출부로 되돌아가게 함
+	}
+	document.getElementById("member_id").value;
+	document.getElementById("member_pw").value;
+	alert("축하합니다.");
+	location.href="http://daum.net";
+	
+}
+</script>
+</head>
+<body>
+	<table width="300px" border="1px" align="center">
+		<tr>
+			<td>ID : </td>
+			<td><input id="member_id" type="text" maxlength="8"></td>
+		</tr>
+		<tr>
+			<td>PW :</td>
+			<td><input id="member_pw" type="password" maxlength="8"></td>
+		</tr>
+		<tr>
+				<td colspan="2">
+					<input type="button" value="회원가입">
+					<input type="button" value="ID/PW 찾기" >
+					<input type="button" value="로그인" onClick="loginCheck()">
+				</td>
+		</tr>
+			
+		
+	</table>
+
+</body>
+</html>

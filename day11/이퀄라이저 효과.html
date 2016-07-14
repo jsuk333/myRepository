@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>이퀄라이저 효과</title>
+<style>
+body{margin:auto;}
+#stage{
+	width:700px;
+	height:500px;
+}
+</style>
+<script>
+var stage;
+var bgArray=["red","orange","yellow","green","blue","navy","purple"];
+var rectArray=new Array();//사각형을 담기 위한 배열
+window.addEventListener("load",function(){
+	init();
+});
+//문서가 로드 돼면 원하는 개수의 사각형을 가로 방향으로 나열하는 것
+function init(){
+	stage=document.getElementById("stage");
+	for(var i=0;i<14;i++){
+		var Rect=new Rec(stage,50,40,50*i,0,bgArray[parseInt(Math.random()*7)]);
+		Rect.init();
+		dance();
+		rectArray.push(Rect);
+	}
+}
+var Rec=function(stage,width,height,x,y,bg){
+	this.stage=stage;
+	this.div;
+	this.bg=bg;
+this.width=width;
+	this.height=height;
+	this.x=x;
+	this.y=y;
+
+	this.init=function(){
+		var me=this;
+		this.div=document.createElement("div");
+		this.div.style.background=this.bg;
+		this.div.style.width=this.width+"px";
+		this.div.style.height=this.height+"px";
+		this.div.style.position="absolute";
+		this.div.style.left=this.x+"px";
+		this.div.style.top=this.y+"px";
+		this.targetY=500;//사각형이 늘어날 y축 좌표값
+		this.div.addEventListener("mouseover",function(){
+			me.targetY=500;
+			me.move();
+		});
+		this.div.addEventListener("mouseout",function(){
+			me.targetY=40;
+			me.move();
+		});
+
+		this.stage.appendChild(this.div);
+		//this.setTargetY();
+		this.move();
+		
+	}
+	this.setTargetY=function(){
+		var me=this;
+		me.targetY=Math.random()*460+40;
+		setTimeout(function(){
+			me.setTargetY();
+		},300);
+	}
+	this.move=function(){
+		var a=0.9;
+		var me=this;
+		this.div.style.height=this.targetY-a*(this.targetY-parseInt(this.div.style.height))+"px";
+		setTimeout(function(){
+			me.move();
+		},30);
+	}
+}
+//일정한 주기 간격으로 사용자가 마우스를 올려 놓지 않더라도 각 사각형이 보유한 타겟 y값을 랜덤으로 부여하자
+function dance(){
+	for(var i=0;i<rectArray.length;i++){
+		rectArray[i].targetY=Math.random()*460+40;
+		rectArray[i].div.style.background=bgArray[parseInt(Math.random()*7)];
+	}
+	setTimeout("dance()",100);
+}
+</script>
+</head>
+<body>
+<div id="stage"></div>
+</body>
+</html>

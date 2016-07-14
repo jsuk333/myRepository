@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>피카츄데리고 다니기</title>
+<style>
+</style>
+<script>
+//문서가 실행되면 아래의 텍스트 박스에 내 이름 넣기!!!
+function init(){
+	document.getElementById("txt").value="사과";
+}
+</script>
+</head>
+<body onload="init()">
+<!--<img src="../images/picha.jpg" id="pic" onDblClick="alert('더블클릭했어?')"  onMouseOut="alert('벗어났어?')" onMouseOver="alert('올려써?')">
+<input type="text" onFocus="alert('커서 올렸어?');" onBlur="alert('커서벋어났어');">-->
+<input type="text" id="txt" onChange="alert('변경했어?')">
+<select onChange="alert('바꿨어');">
+	<option>네이버</option>
+	<option>구글</option>
+	<option>다음</option>
+</select>
+</body>
+</html>

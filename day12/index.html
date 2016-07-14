@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>회원가입양식 유효성 체크</title>
+<link rel="stylesheet" type="text/css" href="/css/mystyle.css" />
+<script>
+	var d = new Date();
+	var tel1Array=["010","011","018","02","031"];
+	var mail_serverArray=["naver.com","daum.net","gmail.com","nate.com"];
+	window.addEventListener("load",function(){
+		init();	
+	});
+	
+	function init(){
+	form1.mid.focus();
+		
+		for (var i=0;i<tel1Array.length;i++ ){
+			var option = document.createElement("option");
+			option.text =tel1Array[i];
+			form1.tel1.add(option);
+		}
+		for (var i=0;i<mail_serverArray.length;i++ ){
+			var option = document.createElement("option");
+			option.text =mail_serverArray[i];
+			form1.mail_server.add(option);
+		}
+		setBirth();
+		form1.jumin2.addEventListener("keyup",function(){
+			checkGender();
+		});
+	}
+	function setSelect(ob,start,end,current){
+		for (var i=start;i<=end;i++ ){
+			var option = document.createElement("option");
+			option.text =i;
+			ob.add(option);
+		}
+		var indexS=parseInt(current)-parseInt(start);
+		ob.selectedIndex=""+indexS;
+	//	alert(current-start);
+	}
+	function checkGender(){
+		var g=form1.jumin2.value.charAt(0);
+		if(g=="1"){
+				form1.gender[0].checked=true;
+		}else if(g=="2"){
+				form1.gender[1].checked=true;
+		}else{
+			form1.gender[0].checked=false;
+			form1.gender[1].checked=false;
+		}	
+	}
+	function setBirth(){
+		var cyy=d.getFullYear();
+		var cmm=d.getMonth()+1;
+		var cdd=d.getDate();
+		var yy= form1.yy;
+		var n = d.getFullYear();
+		setSelect(yy,1940,2020,cyy);
+		var mm= form1.mm;
+		setSelect(mm,1,12,cmm);
+		var dd= form1.dd;
+		setSelect(dd,1,31,cdd);
+	}
+	function regist(){
+		//유효성 체크
+		if(form1.mid.value==""){
+			alert("아이디를 입력하세요!!!");
+			form1.mid.focus();
+			return;
+		}else	if(form1.pwd1.value==""){
+			alert("비밀번호를 입력하세요!!");
+			form1.pwd.focus();
+			return;
+		}else if(form1.pwd2.value==""){
+			alert("패스워드를 입력하세요!!!");
+			form1.pwd2.focus();
+			return;
+		}else if(form1.pwd1.value!=form1.pwd2.value){
+			alert("패스워드가 일치 하지 않습니다.!!!");
+			form1.pwd2.value="";
+			form1.pwd2.focus();
+			return;
+		}else if(form1.mname.value.length<1){
+			alert("이름을 입력해주세요!!!");
+			form1.mname.focus();
+		}
+
+		form1.action="http://daum.net";//전송 url 기재
+		form1.submit();
+	}
+	function findZip(){
+		//새창을 띄운다.(window객체의 api)
+		window.open("zipCode.html","pop","left=100px,hight=100px, width=400px,height=500px");
+	}
+</script>
+</head>
+<body>
+	<form name="form1">
+		<table width="600px" border="1px solid black" align="center">
+			<tr>
+				<td>아이디	</td><td><input type="text" name="mid"></td>
+			</tr>
+			<tr>
+				<td>패스워드	</td><td><input type="password" name="pwd1"></td>
+			</tr>
+			<tr>
+				<td>패스워드 확인	</td><td><input type="text" name="pwd2"></td>
+			</tr>
+			<tr>
+				<td>이름	</td><td><input type="text" name="mname" ></td>
+			</tr>
+			<tr>
+				<td>주민번호	</td><td><input type="text" name="jumin1" maxLength="6" >-<input type="text" name="jumin2" maxLength="6" ></td>
+			</tr>
+			<tr>
+				<td>성별</td><td><input type="radio" name="gender" checked="true">남<input type="radio" name="gender">여</td>
+			</tr>
+			<tr>
+				<td>생년월일	</td><td>
+				년<select name="yy"></select>
+				월<select name="mm"></select>
+				일<select name="dd"></select>
+				</td>
+			</tr>
+			<tr>
+				<td>우편번호</td><td><input type="text" name="zipcode1" readOnly>-<input type="text" name="zipcode2" readOnly>
+				<input type="button" value="검색" onClick="findZip()"></td>
+			</tr>
+			<tr>
+				<td>주소</td><td><input type="text" name="addr1"></td>
+			</tr>
+			<tr>
+				<td>상세 주소</td><td><input type="text" name="addr2"></td>
+			</tr>
+			<tr>
+				<td>이메일</td><td><input type="text" name="mail_id">@<select name="mail_server"></select></td>
+			</tr>
+			<tr>
+				<td>연락처</td><td><select name="tel1"></select>-<input type="text" name="tel2">-<input type="text" name="tel3"></td>
+			</tr>
+			<tr>
+				<td>취미</td><td>*반드시 2개 이상 선택하셔야 합니다.<br>
+				여행<input type="checkbox">
+				게임<input type="checkbox">
+				영화<input type="checkbox">
+				스포츠<input type="checkbox">
+				요리<input type="checkbox">
+				</td>
+			</tr>
+			<tr>
+				<td>남길 메세지</td><td><textarea name="msg" rows="5" cols="50"></textarea></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center"><input type="button" value="회원가입" onClick="regist()"><input type="button" value="다시작성"></td>
+			</tr>
+
+		</table>
+	</form>
+</body>
+</html>

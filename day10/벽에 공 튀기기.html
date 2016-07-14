@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>벽에 공 튀기기</title>
+<style>
+body{
+	margin:0px;
+}
+</style>
+<script src="../lib/lib.js"></script>
+<script>
+var stage;
+var ballArray=["../images/ball/1.png","../images/ball/2.png","../images/ball/3.png","../images/ball/4.png","../images/ball/5.png","../images/ball/6.png"];
+//문서가 로드 되면
+window.addEventListener("load",function(){
+	init();
+});
+//스페이스 바를 누르면....
+window.addEventListener("keydown",function(){
+	//볼을 탄생시키자
+	if(event.keyCode==32){
+		var key_ball=getRandomByRange(0,5);
+		var key_x=getRandomByRange(20,parseInt(stage.style.width)-20);
+		var velX=getFloatRandomByRange(6,-2);
+		var velY=getFloatRandomByRange(6,2);
+		var b=new Ball(stage,50,50,10,10,velX,velY,ballArray[key_ball],0);
+		b.init();
+	}
+});
+function init(){
+	stage=document.getElementById("stage");
+	stage.style.left="0px";
+	stage.style.top="0px";
+
+}
+//볼을 정의 한다.
+var Ball=function(stage,width,height,x,y,velX,velY,src,rotate){
+	/*클래스가 보유한 변수를 멤버 변수라 한다.*/
+	this.stage=stage;
+	this.img;
+	this.src=src;
+	this.width=width;
+	this.height=height;
+	this.x=x;
+	this.y=y;
+	this.rotate=rotate;//시작할 각도
+	this.velX=velX;
+	this.velY=velY;
+	this.init=function(){
+		this.img=document.createElement("img");
+		this.img.src=this.src;
+		this.img.style.width=this.width+"px";
+		this.img.style.height=this.height+"px";
+		this.img.style.position="absolute";
+		this.img.style.left=this.x+"px";
+		this.img.style.top=this.y+"px";
+		this.stage.appendChild(this.img);
+		this.move();
+	}
+	
+	this.move=function(){
+		var me=this;
+		//회전 시키기
+		this.rotate+=2;
+		this.img.style.transform="rotate("+this.rotate+"deg)";
+		//이동하기
+		this.x+=velX;
+		this.y+=velY;
+		if(this.x>=(parseInt(this.stage.style.width)-this.width)||this.x<=0){
+			velX*=(-0.95);
+			this.img.style.left=this.x+velX+"px";
+		}else{
+			this.img.style.left=this.x+"px";
+		}
+		if(this.y>=(parseInt(this.stage.style.height)-this.height)||this.y<=0){
+			velY*=(-0.95);
+			this.img.style.top=this.y+velY+"px";
+		}else{
+			this.img.style.top=this.y+"px";
+		}
+		
+		
+
+		setTimeout(function(){
+			me.move();
+		},10);
+	}
+}
+
+</script>
+</head>
+	<div id="stage" style="width:800px; height:800px; border:1px solid black;" >
+	</div>
+<body>
+</body>
+</html>

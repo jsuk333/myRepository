@@ -1,0 +1,4 @@
+select ename,sal from emp
+when sal<3000
+
+/

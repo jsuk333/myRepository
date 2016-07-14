@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>musicplayer</title>
+<style>
+#monitor{
+	background: yellow;
+	width:500px;
+	height:100px;
+	border:3px solid green;
+	font-size:30pt;
+	color:red;
+	font-weight:bold;
+}
+</style>
+<script>
+//플레이 시킬지, 일시 정지 할지 결정하는 것
+var isPlaying=false;
+var count=1;//어떤 파일을 실행할지 그이름을 담을 변수
+function play(){
+	isPlaying=!isPlaying;
+	//문서내의 music이라는 요소를 플레이 하자
+	if(isPlaying){
+		document.getElementById("music").loop=document.getElementById("ch").checked//체크박스의 상태에 따라 루프 여부 결정
+		document.getElementById("music").play();
+		document.getElementById("bt_play").value="||";
+		document.getElementById("music_name").innerText=count+".mp3";
+	}else{
+		document.getElementById("music").pause();
+		document.getElementById("bt_play").value="▶";
+		document.getElementById("music_name").innerText="재생버튼을 누르세요...";
+	}
+}
+function prev(){
+	//문서내의 dest라는 요소를 다음으로 이동 하자
+	count--;
+	if(count==0)
+		count=5;
+	document.getElementById("dest").src="../music/"+count+".mp3";
+	document.getElementById("music").load();//변경될 음악을 메모리에 로딩시킬 시간을 주는 함수 그리고 플레이
+	document.getElementById("music").play();
+	document.getElementById("music_name").innerText=count+".mp3";
+}
+function next(){
+	//문서내의 dest라는 요소를 다음으로 이동 하자
+	count++;
+	if(count==6)
+		count=1;
+	document.getElementById("dest").src="../music/"+count+".mp3";
+	document.getElementById("music").load();//변경될 음악을 메모리에 로딩시킬 시간을 주는 함수 그리고 플레이
+	document.getElementById("music").play();
+	document.getElementById("music_name").innerText=count+".mp3";
+}
+function stop(){
+	//다시 음악을 준비 시켜라....
+	document.getElementById("music").load();
+	document.getElementById("music_name").innerText="재생버튼을 누르세요...";
+}
+function repeat(){
+	var vid = document.getElementById("myVideo");
+	vid.loop = true;
+	
+}
+</script>
+</head>
+<body>
+<audio id="music" >
+	<source id="dest" src="../music/1.mp3" type="audio/mpeg">
+</audio>
+<div id="monitor">
+<marquee id="music_name">재생버튼을 누르세요...</marquee>
+</div>
+<input type="button" value="◀◀" onClick="prev()">
+<input type="button" value="■" onClick="stop()">
+<input type="button" id="bt_play" value="▶" onClick="play()">
+<input type="button" value="▶▶ "onClick="next()">
+Repeat: <input type="checkbox" id="ch">
+</body>
+</html>

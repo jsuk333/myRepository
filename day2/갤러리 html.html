@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script>
+var c="../images/image";
+var x=50;
+var d;
+function next(){
+	x++;
+	d=x%5;
+	document.getElementById("photo").src="../images/image"+(d+1)+".jpg";
+}
+function prev(){
+	x--;
+	d=x%5;
+	document.getElementById("photo").src="../images/image"+(d+1)+".jpg";
+}
+</script>
+</head>
+<body>
+<img id="photo" src="../images/image1.jpg" width="500px">
+<br>
+<input type="button" value="이전" onClick="prev()">
+<input type="button" value="다음" onClick="next()">
+</body>
+</html>
+

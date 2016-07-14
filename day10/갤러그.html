@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>갤러그</title>
+<style>
+body{
+	margin:0px;
+}
+#stage{
+	width:1000px;
+	height:800px;
+	background-image:url("../images/gallerxy/bg.png");
+	
+}
+</style>
+<script src="../lib/lib.js"></script>
+<script src="../lib/Hero.js"></script>
+<script src="../lib/bullet2.js"></script>
+<script src="../lib/Enemy.js"></script>
+<script>
+var stage;
+var bgY=0;
+var hero;
+var enemyImg=["../images/gallerxy/enermy1.png","../images/gallerxy/enermy2.png","../images/gallerxy/green_king.png","../images/gallerxy/blue_king.png"];
+
+//두개의 배열 kingArray; enemyArray
+var kingArray=new Array();
+var enemyArray=new Array();
+var allArray=new Array();
+allArray[0]=kingArray;
+allArray[1]=enemyArray;
+window.addEventListener("load",function(){
+	stage=document.getElementById("stage");
+	bgEffect();
+	hero=new Hero(stage,50,50,500-25,730);
+	hero.init();
+	//빨간 적군 등장 15마리씩 3줄
+	var redY=0;
+	var redCount=0;
+	var enemyIndex=3;
+	for(var i=0;i<90;i++){
+		if(i==8||i==15){
+			enemyIndex--;
+		}
+		if(i==60){
+			enemyIndex--;
+		}
+		if(i%15==0){
+			redY++;
+			redCount=0;
+		}
+
+		var enemy= new Enemy(stage,30,30,100+(redCount*50),50+(redY*50),enemyImg[enemyIndex]);
+		if(i<15){
+			kingArray.push(enemy);
+		}else{
+			enemyArray.push(enemy);
+		}
+		
+		enemy.init();
+		redCount++;
+		
+	}
+	console.log(kingArray.length);
+	console.log(enemyArray.length);
+
+});
+//키보드 입력처리
+window.addEventListener("keydown",function(){
+	var key=event.keyCode;//입력한 아스키 코드값!!
+	switch(key){
+	case 37:hero.velX=-2;break;
+	case 39:hero.velX=2;	break;
+	case 32:fire();break;
+	}
+});
+window.addEventListener("keyup",function(){
+	var key2=event.keyCode;//입력한 아스키 코드값!!
+	if(key2==37||key2==38||key2==39||key2==40){
+		hero.velX=0;
+	}
+});
+
+
+//배경 이미지 흘러가기 효과
+function bgEffect(){
+	bgY+=50;
+	stage.style.backgroundPosition="0px "+bgY+"px";
+	setTimeout("bgEffect()",100);
+}
+function fire(){
+	var bullet=new Bullet2(stage,10,20,hero.x+(hero.width/2)-5,hero.y);
+	bullet.init();
+}
+//파리 배열 테스트
+/*var testCount=0;
+function test(){
+	stage.removeChild(enemyArray[testCount].img);
+	testCount++;
+}*/
+</script>
+</head>
+<body>
+<div id="stage"><div>
+</body>
+</html>

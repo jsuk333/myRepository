@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>횡스크롤 슈팅</title>
+<style>
+body{
+	margin:0px;
+}
+#stage{
+	height:800px;
+	background-image:url("../images/background.png");
+}
+</style>
+<script src="../lib/lib.js"></script>
+<script src="../lib/Enemy_right.js"></script>
+<script src="../lib/Hero.js"></script>
+<script src="../lib/Bullet.js"></script>
+<script>
+var stage;
+var bgX=0;
+var h1;
+var enemy;
+var enemyArray=new Array();
+window.addEventListener("load",function(){
+	init();
+	
+});
+function bgEffect(){
+	bgX-=5;
+	stage.style.backgroundPosition=bgX+"px 0px";
+	setTimeout("bgEffect()",100);
+}
+function init(){
+	//alert("당신 모니터의 크기는"+screen.width);
+	stage=document.getElementById("stage");
+	stage.style.width=screen.width+"px";
+	h1=new Hero(stage,100,60,100,100,"../images/paceship.png");
+	h1.init();
+	bgEffect();
+//우주선에 대한 상하좌우 이벤트 처리
+	for(var i=0;i<10;i++){
+		enemy=new Enemy_right(stage,60,100,screen.width-100-90*parseInt(i/5),70+(i%5)*110,"../images/warior/image1.png");
+		enemyArray.push(enemy);
+		enemy.init();
+	}
+}
+function fire(){
+	var bullet=new Bullet(stage,h1.x+(h1.width),h1.y+(h1.height)/2-5);
+	bullet.init();
+}
+
+window.addEventListener("keydown",function(){
+	var key=event.keyCode;
+	switch(key){
+		case 37: h1.velX=-2; break;
+		case 38: h1.velY=-2; break;
+		case 39: h1.velX=2; break;
+		case 40: h1.velY=2; break;
+		case 32: fire(); break;
+	}
+});
+window.addEventListener("keyup",function(){
+	var key=event.keyCode;
+	if(key==37||key==39){
+		h1.velX=0;
+	}
+	if(key==38||key==40){
+		h1.velY=0;
+	}
+});
+</script>
+</head>
+<body>
+	<div id="stage"></div>
+</body>
+</html>

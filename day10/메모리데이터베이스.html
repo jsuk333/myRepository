@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>메모리데이터베이스</title>
+<style>
+	body{
+		margin:0px;
+	}
+</style>
+<script>
+var bt;
+var input_id;
+var input_pw;
+var count=0;
+var table;
+var memberList=new Array();
+//문서가 로드 되면
+window.addEventListener("load",function(){
+		//버튼의 이벤트 핸들러 처리
+	getTitle();
+	init();
+	
+});
+function init(){
+	bt=document.getElementById("bt");
+	input_id=document.getElementById("input_id");
+	input_pw=document.getElementById("input_pw");
+	bt.addEventListener("click",function(){
+	//아이디를 입력안하면 욕
+		if(input_id.value==""){
+			alert("아이디를 입력하세요!");
+			input_id.focus();
+			return;
+		}else if(!input_pw.value){
+			alert("패스워드를 입력하세요!");
+			input_pw.focus();
+			return;
+		}else{
+			//지금 등록하려는 사람의 아이디와 패스워드를 배열에 보관해 놓자
+			var member=[input_id.value, input_pw.value];
+			/* 개발자가 직적 인덱스 추가
+			memberList[count++]=member;
+			*/
+			memberList.push(member);
+			getList();
+		}
+	});
+}
+//제목을 처리하는 함수
+function getTitle(){
+	table=document.createElement("table");
+	table.style.width=450+"px";
+	table.style.border="1px";
+
+	//tr 생성 및 추가 2차원 배열의 크기 많큼 만들어야 한다.
+	var tr=document.createElement("tr");
+	//td 생성 및 추가 1차원 배열의 크기 많큼 만들어야 한다.
+	var no_td=document.createElement("td");
+	no_td.innerText="번호";
+	var id_td=document.createElement("td");
+	id_td.innerText="ID";
+	var pw_td=document.createElement("td");
+	pw_td.innerText="패스워드";
+	tr.appendChild(no_td);
+	tr.appendChild(id_td);
+	tr.appendChild(pw_td);
+	
+	table.appendChild(tr);
+	rightSide.appendChild(table);
+}
+//등록된 회원명단을 테이블로 출력하기
+
+function getList(){
+	initTable();
+	var len=memberList.length;
+	//이후 tr 부터 데이터가 들어 가야 한다.
+	for(var i=memberList.length-1;i>=0;i--){
+		var record_tr=document.createElement("tr");
+		var td0=document.createElement("td");
+		var td1=document.createElement("td");
+		var td2=document.createElement("td");
+		
+		td0.innerText=len--;
+		td1.innerText=memberList[i][0];//아이디 정보
+		td2.innerText=memberList[i][1];//패스워드 정보
+		//생성된 td들을 tr에 넣자
+		record_tr.appendChild(td0);
+		record_tr.appendChild(td1);
+		record_tr.appendChild(td2);
+		table.appendChild(record_tr);
+	}
+
+}
+//appendChild의 특징상 테이블에 기존값이 누적되므로 리스트를
+//보여 주기 전에 table 의 리스트를 싹 지운다.
+function initTable(){
+	table.innerHTML="";
+	getTitle();
+}
+
+
+</script>
+</head>
+<body >
+	<div id="stage" style="width:650px; height:600px; margin:auto;">
+		<div id="leftSide" style="width:150px; height:600px; float:left; background:yellow;">
+			ID :<input id="input_id" type="text" size="7" maxlength="12"><br>
+			PW:<input id="input_pw"type="password" size="7" maxlength="8"><br>
+			<input id="bt" type="button" value="버튼">
+		</div>
+		<div id="rightSide" style="width:500px; height:600px; float:left; background:green;"></div>
+	</div>
+</body>
+</html>

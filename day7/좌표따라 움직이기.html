@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Document</title>
+<style>
+/*html 태그중에는 같은 라인에는 절대로 같은 태그가 존재할 수없도록
+배척하는 태그가 여러개 있다. 이러한 특징을 block이라 한다.*/
+#wrapper{
+	width:1000px;
+	height:700px;
+	margin:auto;
+}
+#stage{
+	width:800px;
+	height:700px;
+	background:#ffffcc;
+	float:left;/*div를 띄운다.*/
+}
+#info{
+	width:200px;
+	height:700px;
+	background:#ccffff;
+	float:left;
+}
+#pos{
+	width:100%;
+	height:670px;
+	background:#ffccff;
+	overflow:scroll;
+}
+</style>
+<script>
+//프로그램 실행시 초기화 할 함수
+var stage;
+var pos;
+var data=new Array();//좌표정보를 받는 일차원 배열을 담을 큰 배열
+var count=0;//이차원 배열 중 어디에 넣을지 결정하는 인덱스
+var img;
+var step=0;//큰배열을 순차적으로 이동할 인덱스
+var st;
+function init(){
+	stage=document.getElementById("stage");
+	pos=document.getElementById("pos");
+	//문서내의 마리오 이미지를 존재 시키자
+	img=document.createElement("img");
+	img.src="../images/mario.png";
+	stage.appendChild(img);
+	img.style.width="50px";
+	
+	
+}
+function stamp(){
+	var x=event.clientX;
+	var y=event.clientY;
+	var span=document.createElement("span");
+	span.innerText="●";
+	span.style.position="absolute";
+	span.style.left=x+"px";
+	span.style.top=y+"px";
+	span.style.fontSize=1+"px";
+	stage.appendChild(span);//노드안에 자치태그 요소 추가하기
+	//pos.innerHTML+="[x= "+x+", y="+y+"]<br>";
+	//마우스의 좌표를 1차원 배열에 담아두자
+	var point=[x,y];
+	data[count]=point;
+	pos.innerHTML+="[x= "+data[count][0]+", y="+data[count][1]+"]<br>";
+	count++;
+}
+/*
+이차원 배열에 등록된 좌표들을 하나씩 참조하면서 , 마리오의 좌표와 일치시켜보자
+*/
+
+function start(){
+		img.style.position="absolute";
+		if(step<data.length){
+			img.style.left=data[step][0]+"px";
+			img.style.top=data[step][1]+"px";
+			step++;
+		}else{
+			clearTimeout(st);
+		}
+		
+		st=setTimeout("start()",100)
+}
+function del(){
+	pos.innerHTML="";
+	for(var i=data.length;i>=0;i--){
+		data[i]=null;
+	}
+	for(var i=0;i<data.length;i++){
+		alert(data[i]);
+	}
+}
+
+</script>
+</head>
+<body onLoad="init()">
+	<div id="wrapper">
+		<div id="stage" onMouseDown="stamp()">
+		</div>
+		<div id="info">
+			<input type="button" value="start" onClick="start()">
+			<input type="button" value="clear" onClick="del()">
+			<div id="pos">
+			</div>
+		</div>
+	</div>
+</body>
+</html>

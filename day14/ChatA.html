@@ -5,12 +5,25 @@
 <title>ChatA</title>
 <link rel="stylesheet" type="text/css" href="/css/chat.css" />
 <script>
+var area;
+function init(){
+	area=document.getElementById("area");
+}
+function enter(obj){
+	//챗 B의 텍스트 에이리어의 값에 대화내용을 추가하자
+	var key=event.keyCode;
+	if(key==13){
+		opener.chatB.area.value+="chatA : "+obj.value+"\n";
+		area.value+="chatA : "+obj.value+"\n";
+		obj.value="";
+	}
+}
 </script>
 </head>
-<body>
+<body onload="init()">
 <div id="wrapper">
-<textarea></textarea>
-<input type="text">
+<textarea id="area"></textarea>
+<input type="text" onkeyup="enter(this)">
 </div>
 </body>
 </html>

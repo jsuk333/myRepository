@@ -6,12 +6,15 @@
 <style>
 </style>
 <script>
+//새롭게 태어난 팝업창들이 접근할 수 있도록
+var chatA;
+var chatB;
 function openClient(){
 	//채팅을 할 두 클라이언트 창 띄우기
 	var spec1="width=300px,height=400px, left=100px,top=250";//채팅 설정
-	window.open("ChatA.html","pop1",spec1);
+	chatA=window.open("ChatA.html","pop1",spec1);
 	var spec2="width=300px,height=400px, left=500px,top=250";//채팅 설정
-	window.open("ChatB.html","pop2",spec2);
+	chatB=window.open("ChatB.html","pop2",spec2);
 }
 </script>
 </head>

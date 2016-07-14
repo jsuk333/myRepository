@@ -4,15 +4,15 @@ body{margin:0px;}
 	height:400px;
 }
 textarea{
-	width:100%;
-	height:360px;
+	width:290px;
+	height:320px;
 	color:yellow;
 	font-weight:bold;
 	font-size:12pt;
 	background:#00ccff;
 }
 input{
-	width:100%;
+	width:290px;
 	height:40px;
 	border:2px solid #ccccff;
 	background:#ffffff;

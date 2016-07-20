@@ -1,0 +1,24 @@
+java se standard edition
+-데스크탑에서 실행되는 모든 종류의 응용프로그램
+-아래의 두 플랫폼마저도 se를 설치해야한다.
+java ee enterprise edition
+-웹분야
+-기업용 어플리케이션은 대규모의 배포가 필요
+ 큰 규모의 다수의 사용자가 이용해야 하므로 인터넷 기반으로 간다...
+java me micro edition
+-임베디드 분야(하드웨어 분야)에 사용되는
+ 자바....
+-스마트폰 출시 이전 피쳐폰 시대에 주로 많은 개발이 이루어졌으나
+ 스마트폰 출시 이후 안드로이드에 밀렸다.
+
+jdk java develope kit(자바 개발도구)
+-개발 도구+ 실행환경(jre)이 포함되어져 있다.
+jre java runtime evironment(자바 실행 환경 )
+
+- 96년도
+  세탁기, 임베디드...
+  웹개발 최적화!
+
+-2000 년대 (닷넷...(C#) VS 자바)
+jre에는 jvm (java virtual machine)자바용 가상 os 
+오직 jvm만이 .class 

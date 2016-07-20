@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>game</title>
+<style>body{margin:"0px";}
+</style>
+<script src="./Archer.js"></script>
+<script src="./Arrow.js"></script>
+<script>
+/*
+	배경은 숲
+	게임이 실행되어지는 곳
+	맵, 적, 화살, 아쳐가 생성된다.
+*/
+var stage;
+var archer;
+var arrow;
+window.addEventListener("load",function(){
+	init();
+	
+
+
+});
+function init(){
+	stage=document.getElementById("stage");
+	stage.style.width=800+"px";
+	stage.style.height=800+"px";
+	stage.style.background="yellow";
+	archer=new Archer(stage,100,100,100,100,"../images/archerimg/ready01.png");
+	archer.init();
+	arrow=new Arrow(stage,50,10,50,50,"../images/archerimg/arrow.png");
+	//arrow.init();
+}
+
+</script>
+</head>
+<body>
+	<div id="stage"></div>
+</body>
+</html>

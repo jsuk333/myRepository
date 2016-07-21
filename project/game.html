@@ -7,6 +7,9 @@
 </style>
 <script src="./Archer.js"></script>
 <script src="./Arrow.js"></script>
+<script src="./Block.js"></script>
+<script src="../lib/lib.js"></script>
+<script src="./Enemy.js"></script>
 <script>
 /*
 	배경은 숲
@@ -16,11 +19,17 @@
 var stage;
 var archer;
 var arrow;
+var direction=1;
+var power=4;
+var posX=0;
+var posY=0;
+var blockArray=new Array();
+var enemyArray=new Array();
 window.addEventListener("load",function(){
 	init();
-	
-
-
+	initEvent();
+	initBlock();
+	//initEnemy();
 });
 function init(){
 	stage=document.getElementById("stage");
@@ -29,10 +38,73 @@ function init(){
 	stage.style.background="yellow";
 	archer=new Archer(stage,100,100,100,100,"../images/archerimg/ready01.png");
 	archer.init();
-	arrow=new Arrow(stage,50,10,50,50,"../images/archerimg/arrow.png");
-	//arrow.init();
+	
 }
-
+window.addEventListener("keydown",function(){
+	keySet();
+})
+function keySet(){
+	var key=event.keyCode;
+	switch(key){
+		case 65: go(-1); break;
+		case 87: jump(); break;
+		case 68: go(1); break;
+		case 32: power++; if(power>8){power=8;}break;
+	}
+}
+function initEvent(){
+	stage.addEventListener("mousemove",function(){
+		posX=Math.abs(event.clientX-archer.x);
+		posY=Math.abs(event.clientY-archer.y);
+	});
+}
+function fire(){
+		if(direction==1){
+			arrow=new Arrow(stage,50,10,archer.x+50,archer.y+archer.height/2+10,direction,"../images/archerimg/arrow.png",posX,posY,power);
+		}else{
+			arrow=new Arrow(stage,50,10,archer.x,archer.y+archer.height/2+10,direction,"../images/archerimg/arrow.png",posX,posY,power);
+		}
+		arrow.init();
+		power=4;
+	}
+window.addEventListener("keyup",function(){
+	keyRec();
+})
+function keyRec(){
+	var key=event.keyCode;
+	if(key==65 || key==68){
+		archer.velX=0;
+	}
+	
+	if(key==32){
+		fire();
+	}
+}
+function initBlock(){
+	for(var i=0;i<30;i++){
+		var block=new Block(stage,32,32,32*i,750,"../images/block.png");
+		block.init();
+		blockArray.push(block);
+	}
+}
+function initEnemy(){
+	enemy=new Enemy(stage,137,96,700,400,"../images/archerimg/wolfrun01.png");
+	enemy.init();
+	enemyArray.push(enemy);
+	setTimeout("initEnemy()",5000);
+}
+function go(vel){
+	archer.velX=vel*2;
+	direction=vel;
+	archer.running=true;
+	archer.running=false;
+}
+function jump(){
+	if((!archer.jumping)&&!(archer.falling)){
+		archer.velY=-5;
+		archer.jumping=true;
+	}
+}
 </script>
 </head>
 <body>

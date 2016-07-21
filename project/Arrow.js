@@ -8,7 +8,7 @@
 	
 */
 
-var Arrow=function(stage,width,height,x,y,src){
+var Arrow=function(stage,width,height,x,y,direction,src,posX,posY,power){
 	this.stage=stage;
 	this.img;
 	this.src=src;
@@ -16,12 +16,18 @@ var Arrow=function(stage,width,height,x,y,src){
 	this.height=height;
 	this.x=x;
 	this.y=y;
-	this.velX=0;
+	this.direction=direction;
+	this.velX=2;
 	this.velY=0;
-	this.gravity=0.1;
-	this.power;
+	this.gravity=0.05;
+	this.power=power;
+	this.posX=posX;
+	this.posY=posY;
+	this.rad=0;
+	this.deg=0;
 	var me=this;
-
+	this.degree=180;
+	this.st;
 	this.init=function(){
 		this.img=document.createElement("img");
 		this.img.src=this.src;
@@ -32,17 +38,51 @@ var Arrow=function(stage,width,height,x,y,src){
 		this.img.style.top=this.y+"px";
 
 		this.stage.appendChild(this.img);
+		
+		this.rad=Math.atan2(this.posY,this.posX);
+		this.velY-=this.power*Math.sin(this.rad);
+		this.velX+=this.power*Math.cos(this.rad);
+		this.deg=Math.atan2(this.velY,this.velX)*180/3.14;
+		if(this.direction==1){
+			this.img.style.transform="rotateY("+this.degree+"deg)";
+		}
+		this.img.style.transform="rotateZ("+this.deg+"deg)";
+		
+		console.log(this.deg);
+		this.velX*=this.direction;
+		
+		
+		this.move();
 	}
 
-
 	this.move=function(){
-		setTimeout(function(){
-			me.move();
-		},10);
 		this.velY+=this.gravity;
+		if(this.y>=parseInt(this.stage.style.width)||this.y<=0||this.x<=0||this.x>=parseInt(this.stage.style.height)){
+			this.del();
+			return;
+		}
+		for(var i=0;i<enemyArray.length;i++){
+			if(enemyArray[i]!=undefined){
+				var result=hitTest(this.img,enemyArray[i].div);
+				if(result){
+					this.del();
+					enemyArray[i].flag=true;
+					return;
+				}
+			}
+		}
 		this.x+=this.velX;
 		this.y+=this.velY;
-		this.div.style.left=this.x+"px";
-		this.div.style.top=this.y+"px";
+		this.deg=Math.atan2(this.velY,this.velX)*180/3.14;
+		this.img.style.transform="rotateZ("+this.degree+this.deg+"deg)";
+		this.img.style.left=this.x+"px";
+		this.img.style.top=this.y+"px";
+		this.st=setTimeout(function(){
+			me.move();
+		},10);
+	}
+	this.del=function(){
+		this.stage.removeChild(this.img);
+		clearTimeout(this.st);
 	}
 }

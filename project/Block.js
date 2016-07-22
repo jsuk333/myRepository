@@ -1,22 +1,20 @@
 /*맵을 정의 한다.*/
 
-var Block=function(stage,width,height,x,y,src){
+var Block=function(stage,width,height,x,y){
 	this.stage=stage;
 	this.width=width;
 	this.height=height;
-	this.src=src;
 	this.x=x;
 	this.y=y;
 	this.div;
 	this.init=function(){
-		this.img=document.createElement("img");
-		this.img.src=this.src;
-		this.img.style.width=this.width+"px";
-		this.img.style.height=this.height+"px";
-		this.img.style.position="absolute";
-		this.img.style.left=this.x+"px";
-		this.img.style.top=this.y+"px";
-		this.stage.appendChild(this.img);
+		this.div=document.createElement("div");
+		this.div.style.width=this.width+"px";
+		this.div.style.height=this.height+"px";
+		this.div.style.position="absolute";
+		this.div.style.left=this.x+"px";
+		this.div.style.top=this.y+"px";
+		this.stage.appendChild(this.div);
 	
 	}
 }

@@ -16,17 +16,17 @@ var Arrow=function(stage,width,height,x,y,direction,src,posX,posY,power){
 	this.height=height;
 	this.x=x;
 	this.y=y;
-	this.direction=direction;
+	this.direction=direction;//아처의 이동방향
 	this.velX=2;
 	this.velY=0;
 	this.gravity=0.05;
-	this.power=power;
-	this.posX=posX;
-	this.posY=posY;
-	this.rad=0;
-	this.deg=0;
+	this.power=power;//화살의 파워, 초기 속도를 결정한다.
+	this.posX=posX;//아쳐와 마우스 사이의 x방향 거리
+	this.posY=posY;//아쳐와 마우스 사이의 y방향 거리
+	this.rad=0;//화살의 발사각도를 정의할 변수 라디안 단위
+	this.deg=0;//화살의 발사각도를 정의할 변수 디그리 단위
 	var me=this;
-	this.degree=180;
+	this.degree=180;//화살의 각도 최종값
 	this.st;
 	this.init=function(){
 		this.img=document.createElement("img");
@@ -43,13 +43,10 @@ var Arrow=function(stage,width,height,x,y,direction,src,posX,posY,power){
 		this.velY-=this.power*Math.sin(this.rad);
 		this.velX+=this.power*Math.cos(this.rad);
 		this.deg=Math.atan2(this.velY,this.velX)*180/3.14;
-		if(this.direction==1){
-			this.img.style.transform="rotateY("+this.degree+"deg)";
-		}
-		this.img.style.transform="rotateZ("+this.deg+"deg)";
-		
+		this.degree=180+this.deg;
+		this.img.style.transform="rotateZ("+this.degree+"deg)";//발사 각도를 정의한다.
 		console.log(this.deg);
-		this.velX*=this.direction;
+		this.velX*=this.direction;//발사 방향
 		
 		
 		this.move();
@@ -57,24 +54,30 @@ var Arrow=function(stage,width,height,x,y,direction,src,posX,posY,power){
 
 	this.move=function(){
 		this.velY+=this.gravity;
-		if(this.y>=parseInt(this.stage.style.width)||this.y<=0||this.x<=0||this.x>=parseInt(this.stage.style.height)){
+		if(this.y>=parseInt(this.stage.style.height)||this.y<=0||this.x<=0||this.x>=parseInt(this.stage.style.width)){//화면밖으로 나가면 죽는다.
+			console.log(this.x)
 			this.del();
 			return;
 		}
-		for(var i=0;i<enemyArray.length;i++){
+		for(var i=0;i<enemyArray.length;i++){//히트테스트
 			if(enemyArray[i]!=undefined){
 				var result=hitTest(this.img,enemyArray[i].div);
 				if(result){
 					this.del();
-					enemyArray[i].flag=true;
+					enemyArray[i].hitPoint-=this.power;//적군의 체력을 감소 시킨다.
+					if(enemyArray[i].hitPoint<=0){//체력이 0이하가 되면 죽는다.
+						enemyArray[i].del();
+						delete enemyArray[i];
+					}
 					return;
 				}
 			}
 		}
 		this.x+=this.velX;
 		this.y+=this.velY;
-		this.deg=Math.atan2(this.velY,this.velX)*180/3.14;
-		this.img.style.transform="rotateZ("+this.degree+this.deg+"deg)";
+		this.deg=Math.atan2(this.velY,this.velX)*180/3.14;//화살이 움직이는 동안의 라디안 각도
+		this.degree=180+this.deg;
+		this.img.style.transform="rotateZ("+this.degree+"deg)";
 		this.img.style.left=this.x+"px";
 		this.img.style.top=this.y+"px";
 		this.st=setTimeout(function(){

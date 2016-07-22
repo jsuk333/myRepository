@@ -19,31 +19,38 @@
 var stage;
 var archer;
 var arrow;
-var direction=1;
-var power=4;
-var posX=0;
-var posY=0;
+var direction=1;//아쳐의 시선 초기값은 x++방향을 향하여
+var power=4;//화살의 디폴트 파워
+var posX=0;//아쳐와 마우스 사이의 x방향 거리
+var posY=0;//아쳐와 마우스 사이의 y방향 거리
+var vgX=0;//배경의 x좌표
+var step=0;//배경을 움직이는 파라미터
+var width=800;
+var height=600;
 var blockArray=new Array();
 var enemyArray=new Array();
 window.addEventListener("load",function(){
-	init();
+	initStage();
 	initEvent();
 	initBlock();
-	//initEnemy();
+	initEnemy();
+	bgEffect();
 });
-function init(){
+function initStage(){
 	stage=document.getElementById("stage");
-	stage.style.width=800+"px";
-	stage.style.height=800+"px";
-	stage.style.background="yellow";
-	archer=new Archer(stage,100,100,100,100,"../images/archerimg/ready01.png");
+	stage.style.width=width+"px";
+	stage.style.height=height+"px";
+	stage.style.backgroundImage="url(../images/archerimg/forest.png)";
+	stage.style.backgroundSize=width+"px "+height+"px";
+	stage.style.backgroundRepeat="repeat-x";//배경이 x방향으로 연속적이게 한다.
+	archer=new Archer(stage,80,80,100,350,"../images/archerimg/ready01.png");
 	archer.init();
 	
 }
 window.addEventListener("keydown",function(){
 	keySet();
 })
-function keySet(){
+function keySet(){//아쳐 키보드 설정
 	var key=event.keyCode;
 	switch(key){
 		case 65: go(-1); break;
@@ -52,17 +59,17 @@ function keySet(){
 		case 32: power++; if(power>8){power=8;}break;
 	}
 }
-function initEvent(){
+function initEvent(){//마우스와 아군의 거리를 체크한다.
 	stage.addEventListener("mousemove",function(){
 		posX=Math.abs(event.clientX-archer.x);
 		posY=Math.abs(event.clientY-archer.y);
 	});
 }
-function fire(){
+function fire(){//아쳐의 방향에 따라 화살의 방향을 결정한다.
 		if(direction==1){
-			arrow=new Arrow(stage,50,10,archer.x+50,archer.y+archer.height/2+10,direction,"../images/archerimg/arrow.png",posX,posY,power);
+			arrow=new Arrow(stage,50,10,archer.x+50,archer.y+archer.height/2-10,direction,"../images/archerimg/arrow.png",posX,posY,power);
 		}else{
-			arrow=new Arrow(stage,50,10,archer.x,archer.y+archer.height/2+10,direction,"../images/archerimg/arrow.png",posX,posY,power);
+			arrow=new Arrow(stage,50,10,archer.x,archer.y+archer.height/2-10,direction,"../images/archerimg/arrow.png",posX,posY,power);
 		}
 		arrow.init();
 		power=4;
@@ -70,44 +77,50 @@ function fire(){
 window.addEventListener("keyup",function(){
 	keyRec();
 })
-function keyRec(){
-	var key=event.keyCode;
+function keyRec(){//키가 회복되었을 때 아쳐의 속도를 0으로 만들고 화살을 발사한다.
+var key=event.keyCode;
 	if(key==65 || key==68){
 		archer.velX=0;
+		step=0;
 	}
 	
 	if(key==32){
 		fire();
 	}
 }
-function initBlock(){
-	for(var i=0;i<30;i++){
-		var block=new Block(stage,32,32,32*i,750,"../images/block.png");
+function initBlock(){//맵
+		var block=new Block(stage,width,10,0,480,"../images/block.png");
 		block.init();
 		blockArray.push(block);
 	}
-}
-function initEnemy(){
-	enemy=new Enemy(stage,137,96,700,400,"../images/archerimg/wolfrun01.png");
+function initEnemy(){//일정시간 마다 적이 나온다.
+	enemy=new Enemy(stage,80,60,width-100,height-250,"../images/archerimg/wolfrun01.png");
 	enemy.init();
 	enemyArray.push(enemy);
-	setTimeout("initEnemy()",5000);
+	setTimeout("initEnemy()",10000);
 }
-function go(vel){
+function go(vel){//아쳐의 이동방향 점프를 결정한다.
 	archer.velX=vel*2;
 	direction=vel;
+	step=0.5*vel;
 	archer.running=true;
 	archer.running=false;
 }
-function jump(){
+function jump(){//아쳐의 점프 결정
 	if((!archer.jumping)&&!(archer.falling)){
 		archer.velY=-5;
 		archer.jumping=true;
 	}
 }
+function bgEffect(){//아쳐의 이동에 따라 배경의 이동을 보여 준다. 
+	setTimeout("bgEffect()",10);
+
+	vgX+=step;
+	stage.style.backgroundPosition=vgX+"px 0px";
+}
 </script>
 </head>
 <body>
-	<div id="stage"></div>
+	<div id="stage" ></div>
 </body>
 </html>

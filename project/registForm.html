@@ -6,16 +6,96 @@
 <style>
 </style>
 <script>
-/*
-	id: 
-	pwd:
-	pwd 확인
-	이름
-	등록
-*/
+var d=new Date();
+var bt;
+window.addEventListener("load",function(){
+	bt=document.getElementById("bt");
+	init();
+	
+});
+function init(){
+	var cyy=d.getFullYear();
+	var cdd=d.getDate();
+	var cmm=d.getMonth()+1;
+	d.setMonth(cmm);
+	var lastday=d.setDate(0);
+	for (var i=1940;i<=2030;i++ ){
+			var option = document.createElement("option");
+			option.text =i;
+			form1.yy.add(option);
+	}
+	form1.yy.value=cyy;
+	for (var i=1;i<=12;i++ ){
+			var option = document.createElement("option");
+			option.text =i;
+			form1.mm.add(option);
+	}
+	form1.mm.value=cmm;
+	for (var i=1;i<=31;i++ ){
+			var option = document.createElement("option");
+			option.text =i;
+			form1.dd.add(option);
+	}
+	form1.dd.value=cdd;
+	bt.addEventListener("click",function(){
+		if(!form1.name.value){
+			alert("이름을 입력해주세요");
+			return;
+		}else if(!form1.id.value){
+			alert("아이디를 입력해주세요.");
+			return;
+		}else if(form1.name.value==""){
+			alert("이미 존재하는 아이디 입니다.");
+			return;
+		}else if(!form1.pwd.value){
+			alert("비밀번호를 입력해주세요");
+			return;
+		}else if(!form1.pwdcheck.value){
+			alert("확인 비밀번호를 입력해주세요");
+			return;
+		}else if(form1.pwd.value!=form1.pwdcheck.value){
+			alert("다른 비밀번호 입니다.");
+			return;
+		}
+		form1.action="/regist";
+		form1.submit("");
+	
+	});
+	
+}
+
 </script>
 </head>
 <body>
+	<form name="form1" method="post"  >
+		<table bgcolor="#ffff99" width="500px" align="center">
+			<tr>
+				<td>이름</td><td><input type="text" name="name"></td>
+			</tr>
+			<tr>
+				<td>생년월일</td>
+				<td>
+					년<select name="yy"></select>
+					월<select name="mm"></select>
+					일<select name="dd"></select>
+				</td>
+			</tr>
+			<tr>
+				<td>아이디</td><td><input type="text" name="id"></td>
+			</tr>
+			<tr>
+				<td>비밀번호</td><td><input type="text" name="pwd"></td>
+			</tr>
+			<tr>
+				<td>비밀번호 확인</td><td><input type="text" name="pwdcheck"></td>
+			</tr>
+			<tr align="center">
+				<td colspan="2">
+					<input type="button" value="Regist" id="bt">
+				</td>
+			</tr>
+		</table>
+	</form>
 </body>
 </html>
 

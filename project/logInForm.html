@@ -6,16 +6,68 @@
 <style>
 </style>
 <script>
-/*
-	id: 
-	pwd:
-	로그인 회원가입 아이디 찾기
-	아이디 찾기를 누르면 기존의 창 에서 추가 적으로 아이디를 찾는 창이 뜨게 됨
-	이름으로 검색후 아이디 패스워드 출력
-*/
+var bt_login;
+var bt_regit;
+var bt_find;
+window.addEventListener("load",function(){
+	init();
+
+});
+function init(){
+	bt_login=document.getElementById("bt_login");
+	bt_regit=document.getElementById("bt_regit");
+	bt_find=document.getElementById("bt_find");
+	form1.id.focus();
+	bt_login.addEventListener("click",function(){
+		if(!form1.id.value){
+			alert("아이디를 입력해 주세요");
+			return;
+		}else if(!form1.pwd.value){
+			alert("비밀번호를 입력해주세요.");
+			return;
+		}else if(form1.id.value==""){
+			alert("등록되지 않은 id입니다.");
+			return;
+		}else if(form1.pwd.value==""){
+			alert("틀린 비밀번호입니다.");
+			return;
+		}
+		form1.action="/login";
+		form1.submit("");
+	
+	});
+	bt_regit.addEventListener("click",function(){
+		form1.action="/regist";
+		form1.submit("");
+	
+	});
+	bt_find.addEventListener("click",function(){
+		form1.action="/find";
+		form1.submit("");
+	
+	});
+
+}
 </script>
 </head>
 <body>
+	<form name="form1" method="post"  >
+		<table bgcolor="yellow" align="center">
+			<tr>
+				<td>아이디</td><td><input type="text" name="id"></td>
+			</tr>
+			<tr>
+				<td>비밀번호</td><td><input type="text" name="pwd"></td>
+			</tr>
+			<tr align="center">
+				<td colspan="2">
+					<input type="button" value="Log-In" id="bt_login">
+					<input type="button" value="Regist" id="bt_regit">
+					<input type="button" value="FindID" id="bt_find">
+				</td>
+			</tr>
+		</table>
+	</form>
 </body>
 </html>
 

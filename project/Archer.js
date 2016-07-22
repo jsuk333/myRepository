@@ -1,6 +1,6 @@
 /*
-	enemy의 클래스를 정의 한다.
-	archer: 좌로 이동 점프 가능, 화살 발사(화살객체 생성), 체력 을 위에 표시,
+	archer의 클래스를 정의 한다.
+	archer: 좌로 이동 점프 가능, 화살 발사(화살객체 생성)
 	생명력이 바닥 나면 게임 오버
 	변수: 아이디, 체력, width, height, x, y, img, div,
 	
@@ -22,6 +22,7 @@ var Archer=function(stage,width,height,x,y,src){
 	this.falling=false;
 	this.deg=180;
 	this.st;
+	this.hitPoint=10;
 	var me=this;
 	this.init=function(){
 		this.div=document.createElement("div");
@@ -53,14 +54,14 @@ var Archer=function(stage,width,height,x,y,src){
 			this.falling=true;//주인공이 떨어 지고 있음으로 전환
 		}
 		for(var i=0;i<blockArray.length;i++){
-			var result=hitTest(this.div,blockArray[i].img);
+			var result=hitTest(this.div,blockArray[i].div);
 			if(result&&this.falling){
 				this.velY=0;
 				this.falling=false;//벽돌을 밟으면 더이상 떨어지 지 않음
 			}
 		}
 	
-		if(this.y>=parseInt(this.stage.style.width)||this.y<=0||this.x<=0||this.x>=parseInt(this.stage.style.height)){
+		if(this.y>=parseInt(this.stage.style.height)||this.y<=0||this.x<=0||this.x>=parseInt(this.stage.style.width)){
 			this.del();
 			return;
 		}
@@ -68,10 +69,15 @@ var Archer=function(stage,width,height,x,y,src){
 		this.div.style.left=this.x+"px";
 		this.y+=this.velY;
 		this.div.style.top=this.y+"px";
-		if(this.velX>0){
+		if(this.velX>0){//속도에 따라 아쳐의 시선을 바꾼다.
 			this.deg=180;
 		}else if(this.velX<0){
 			this.deg=0;
+		}
+		if(this.hitPoint<=0){//아쳐가 죽으면 추방한다.
+			this.div.style.left=1000+"px";
+			this.div.style.left=1000+"px";
+			return;
 		}
 		this.img.style.transform="rotateY("+this.deg+"deg)";
 	}

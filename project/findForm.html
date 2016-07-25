@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>logInForm</title>
+<title>findForm</title>
 <style>
 </style>
 <script>
@@ -41,25 +41,9 @@ function init(){
 		if(!form1.name.value){
 			alert("이름을 입력해주세요");
 			return;
-		}else if(!form1.id.value){
-			alert("아이디를 입력해주세요.");
-			return;
-		}else if(form1.name.value==""){
-			alert("이미 존재하는 아이디 입니다.");
-			return;
-		}else if(!form1.pwd.value){
-			alert("비밀번호를 입력해주세요");
-			return;
-		}else if(!form1.pwdcheck.value){
-			alert("확인 비밀번호를 입력해주세요");
-			return;
-		}else if(form1.pwd.value!=form1.pwdcheck.value){
-			alert("다른 비밀번호 입니다.");
-			return;
 		}
-		form1.action="/regist";
+		form1.action="/find";
 		form1.submit("");
-	
 	});
 	
 }
@@ -80,18 +64,9 @@ function init(){
 					일<select name="dd"></select>
 				</td>
 			</tr>
-			<tr>
-				<td>아이디</td><td><input type="text" name="id"></td>
-			</tr>
-			<tr>
-				<td>비밀번호</td><td><input type="password" name="pwd"></td>
-			</tr>
-			<tr>
-				<td>비밀번호 확인</td><td><input type="password" name="pwdcheck"></td>
-			</tr>
 			<tr align="center">
 				<td colspan="2">
-					<input type="button" value="Regist" id="bt">
+					<input type="button" value="Find" id="bt">
 				</td>
 			</tr>
 		</table>

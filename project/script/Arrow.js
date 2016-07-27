@@ -64,6 +64,8 @@ var Arrow=function(stage,width,height,x,y,direction,src,posX,posY,power){
 				var result=hitTest(this.img,enemyArray[i].div);
 				if(result){
 					this.del();
+					var hitRep=new HitRep(this.stage,enemyArray[i].img,this.power);
+					hitRep.init();
 					enemyArray[i].hitPoint-=this.power;//적군의 체력을 감소 시킨다.
 					if(enemyArray[i].hitPoint<=0){//체력이 0이하가 되면 죽는다.
 						enemyArray[i].del();

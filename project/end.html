@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>end</title>
+<style>
+body{margin:0px;}
+#stage{
+	width:852px;
+	height:480px;
+	background-image:url('/images/end.jpg');
+}
+</style>
+<script>
+
+function back(){
+	form1.action="/logInForm";
+	form1.submit();
+}
+</script>
+</head>
+<body>
+	<form name="form1" method="get"  >
+		<div id="stage" onclick="back()">
+		</div>
+	</form>
+</body>
+</html>

@@ -5,14 +5,15 @@
 	변수:  width, height, x, y, img, div,
 	
 */
-var Enemy=function(stage,width,height,x,y,src){
+var Enemy=function(stage,width,height,x,y,run,jump){
 	this.stage=stage;
 	this.width=width;
 	this.height=height;
 	this.x=x;
 	this.y=y;
 	this.img;
-	this.src=src;
+	this.run=run;
+	this.jump=jump;
 	this.div;
 	this.velX=-1.5;
 	this.velY=0;
@@ -24,8 +25,10 @@ var Enemy=function(stage,width,height,x,y,src){
 	this.st;
 	this.hitPoint=parseInt(Math.random()*20)+10;//적군의 초기 체력
 	this.count=0;
-	this.actionCount=0;
-	this.speed=0;
+	this.runCount=0;
+	this.runSpeed=0;
+	this.jumpCount=0;
+	this.jumpSpeed=0;
 	this.init=function(){
 		this.div=document.createElement("div");
 		this.div.style.position="absolute";
@@ -35,12 +38,12 @@ var Enemy=function(stage,width,height,x,y,src){
 		this.div.style.height=this.width+"px";
 
 		this.img=document.createElement("img");
-		this.img.src=this.src[0];
+		this.img.src=this.run[0];
 		this.img.style.postion="absolute";
 		this.img.style.left=this.x+"px";
 		this.img.style.top=this.y+"px";
-		this.img.style.width=this.width+"px";
-		this.img.style.height=this.width+"px";
+		this.img.style.width=this.width+parseInt(archer.level/10)+"px";
+		this.img.style.height=this.height+parseInt(archer.level/10)+"px";
 		this.img.style.transform="rotateY("+180+"deg)";
 		this.div.appendChild(this.img);
 		this.stage.appendChild(this.div);
@@ -66,24 +69,39 @@ var Enemy=function(stage,width,height,x,y,src){
 				this.attack=0;
 			}
 		}
-		if(isfloor){
-			this.img.src=this.src[actionCount];
+		
+		if(this.isfloor){
+			this.runSpeed++;
+			this.count++;
+			if(this.runSpeed==20){
+				this.runCount++;
+				this.runSpeed=0;
+			}
+			if(this.runCount>=run.length){
+				this.runCount=0;
+			}
+		}else{
+			this.jumpSpeed++;
+			if(this.jumpSpeed==25){
+				this.jumpCount++;
+				this.jumpSpeed=0;
+			}
+			if(this.jumpCount>=jump.length){
+				this.jumpCount=0;
+			}
 		}
 		if(this.isfloor){
-			this.speed++;
-			this.count++;
-			if(this.speed==10){
-				this.actionCount++;
-				this.speed=0;
-			}
-			if(this.actionCount>=6){
-				this.actionCount=0;
-			}
+			this.img.src=this.run[this.runCount];
+			this.jumpCount=0;
+		}else{
+			this.img.src=this.jump[this.jumpCount];
+			console.log(this.jumpCount);
+			this.runCount=0;
 		}
 		var j=parseInt(Math.random()*40)+50;
 		if((this.isfloor)&&(this.count>=j)){
 			
-			this.jump();
+			this.jumping();
 		}
 		var result=hitTest(this.div,archer.div);
 		if(result){//아쳐와 부딪치면 아쳐의 체력을 떨어트리고 뒤로 이동한다.
@@ -95,7 +113,6 @@ var Enemy=function(stage,width,height,x,y,src){
 		this.y+=this.velY;
 		this.div.style.left=this.x+"px";
 		this.div.style.top=this.y+"px";
-		console.log("체력"+this.hitPoint);
 		this.st=setTimeout(function(){
 				me.move();
 		},10);
@@ -103,8 +120,9 @@ var Enemy=function(stage,width,height,x,y,src){
 	this.del=function(){
 		this.stage.removeChild(this.div);
 		clearTimeout(this.st);
+		archer.score+=10;
 	}
-	this.jump=function(){
+	this.jumping=function(){
 		this.velY=-4;
 		this.attack=-1;
 		this.isfloor=false;

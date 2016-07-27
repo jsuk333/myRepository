@@ -5,7 +5,7 @@
 	변수: 아이디, 체력, width, height, x, y, img, div,
 	
 */
-var Archer=function(stage,width,height,x,y,src){
+var Archer=function(stage,width,height,x,y,src,level,score){
 	this.stage=stage;
 	this.width=width;
 	this.height=height;
@@ -21,9 +21,11 @@ var Archer=function(stage,width,height,x,y,src){
 	this.jumping=false;
 	this.falling=false;
 	this.deg=180;
+	this.score=score;
 	this.st;
 	this.hitPoint=10;
 	var me=this;
+	this.level=level;
 	this.init=function(){
 		this.div=document.createElement("div");
 		this.div.style.position="absolute";
@@ -74,6 +76,9 @@ var Archer=function(stage,width,height,x,y,src){
 		}else if(this.velX<0){
 			this.deg=0;
 		}
+		if(this.score==100){
+			this.level++;
+		}
 		if(this.hitPoint<=0){//아쳐가 죽으면 추방한다.
 			this.div.style.left=1000+"px";
 			this.div.style.left=1000+"px";
@@ -84,5 +89,7 @@ var Archer=function(stage,width,height,x,y,src){
 	this.del=function(){
 		this.stage.removeChild(this.div);
 		clearTimeout(this.st);
+		form1.action="/end";
+		form1.submit();
 	}
 }

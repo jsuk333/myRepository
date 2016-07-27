@@ -25,12 +25,6 @@ function init(){
 		}else if(!form1.pwd.value){
 			alert("비밀번호를 입력해주세요.");
 			return;
-		}else if(form1.id.value==""){
-			alert("등록되지 않은 id입니다.");
-			return;
-		}else if(form1.pwd.value==""){
-			alert("틀린 비밀번호입니다.");
-			return;
 		}
 		form1.action="/login";
 		form1.submit("");

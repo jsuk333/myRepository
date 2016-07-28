@@ -36,7 +36,6 @@ var HitRep=function(stage,obj,power){
 		},10);
 	}
 	this.del=function(){
-		console.log("안녕");
 		this.stage.removeChild(this.text);
 		clearTimeout(this.st);
 	}

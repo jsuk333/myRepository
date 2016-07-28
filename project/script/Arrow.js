@@ -45,7 +45,6 @@ var Arrow=function(stage,width,height,x,y,direction,src,posX,posY,power){
 		this.deg=Math.atan2(this.velY,this.velX)*180/3.14;
 		this.degree=180+this.deg;
 		this.img.style.transform="rotateZ("+this.degree+"deg)";//발사 각도를 정의한다.
-		console.log(this.deg);
 		this.velX*=this.direction;//발사 방향
 		
 		
@@ -55,7 +54,6 @@ var Arrow=function(stage,width,height,x,y,direction,src,posX,posY,power){
 	this.move=function(){
 		this.velY+=this.gravity;
 		if(this.y>=parseInt(this.stage.style.height)||this.y<=0||this.x<=0||this.x>=parseInt(this.stage.style.width)){//화면밖으로 나가면 죽는다.
-			console.log(this.x)
 			this.del();
 			return;
 		}

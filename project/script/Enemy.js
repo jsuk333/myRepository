@@ -95,7 +95,6 @@ var Enemy=function(stage,width,height,x,y,run,jump){
 			this.jumpCount=0;
 		}else{
 			this.img.src=this.jump[this.jumpCount];
-			console.log(this.jumpCount);
 			this.runCount=0;
 		}
 		var j=parseInt(Math.random()*40)+50;
@@ -126,7 +125,6 @@ var Enemy=function(stage,width,height,x,y,run,jump){
 		this.velY=-4;
 		this.attack=-1;
 		this.isfloor=false;
-		console.log(this.count);
 		this.count=0;
 	}
 }

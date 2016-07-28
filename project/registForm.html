@@ -4,6 +4,25 @@
 <meta charset="UTF-8">
 <title>logInForm</title>
 <style>
+body{
+	margin:0px;
+}
+div{
+	width:800px;
+	height:600px;
+	background-image:url("/images/login.jpg");
+}
+#tb{
+	width:300px;
+	height:100px;
+	position: absolute;
+	left:500px;
+	top:200px;
+	
+}
+input.text,input.password{
+	width:150px;
+}
 </style>
 <script>
 var d=new Date();
@@ -68,33 +87,35 @@ function init(){
 </head>
 <body>
 	<form name="form1" method="post"  >
-		<table bgcolor="#ffff99" width="500px" align="center">
-			<tr>
-				<td>이름</td><td><input type="text" name="name"></td>
-			</tr>
-			<tr>
-				<td>생년월일</td>
-				<td>
-					년<select name="yy"></select>
-					월<select name="mm"></select>
-					일<select name="dd"></select>
-				</td>
-			</tr>
-			<tr>
-				<td>아이디</td><td><input type="text" name="id"></td>
-			</tr>
-			<tr>
-				<td>비밀번호</td><td><input type="password" name="pwd"></td>
-			</tr>
-			<tr>
-				<td>비밀번호 확인</td><td><input type="password" name="pwdcheck"></td>
-			</tr>
-			<tr align="center">
-				<td colspan="2">
-					<input type="button" value="Regist" id="bt">
-				</td>
-			</tr>
-		</table>
+		<div>
+			<table id="tb">
+				<tr>
+					<td>이름</td><td><input type="text" name="name"></td>
+				</tr>
+				<tr>
+					<td>생년월일</td>
+					<td>
+						년<select name="yy"></select>
+						월<select name="mm"></select>
+						일<select name="dd"></select>
+					</td>
+				</tr>
+				<tr>
+					<td>아이디</td><td><input type="text" name="id"></td>
+				</tr>
+				<tr>
+					<td>비밀번호</td><td><input type="password" name="pwd"></td>
+				</tr>
+				<tr>
+					<td>비밀번호 확인</td><td><input type="password" name="pwdcheck"></td>
+				</tr>
+				<tr align="center">
+					<td colspan="2">
+						<input type="button" value="Regist" id="bt">
+					</td>
+				</tr>
+			</table>
+		</div>
 	</form>
 </body>
 </html>

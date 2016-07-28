@@ -6,14 +6,17 @@
 <meta charset="UTF-8">
 <title>game</title>
 <style>
-body{margin:"0px";}
+body{margin:"0px";color:#ffffff;}
+input{
+	color:#ffffff;
+	background:#000000;
+}
 form1.info{
 	width:width+"px";
 	height:height+"px";
 	position:"absolute";
 	top:"50px";
 	left:"10px";
-	color:"white";
 }
 </style>
 <script src="/script/HitRep.js"></script>
@@ -47,7 +50,11 @@ var height=600;
 var blockArray=new Array();
 var enemyArray=new Array();
 var wolfRun=["/images/wolfrun01.png","/images/wolfrun02.png","/images/wolfrun03.png","/images/wolfrun04.png","/images/wolfrun05.png","/images/wolfrun06.png"];
-var wolfJump=["/images/jump01.png","/images/jump02.png","/images/jump03.png","/images/jump05.png"];
+var wolfJump=["/images/jump01.png","/images/jump02.png","/images/jump03.png","/images/jump04.png","/images/jump05.png"];
+var await=["/images/await01.png","/images/await02.png","/images/await03.png"];
+var arun=["/images/arun01.png","/images/arun02.png","/images/arun03.png","/images/arun04.png","/images/arun05.png","/images/arun06.png","/images/arun07.png","/images/arun08.png"];
+var aready=["/images/aready01.png","/images/aready02.png"];
+var alaunch=["/images/alaunch01.png","/images/alaunch02.png","/images/alaunch02.png"];
 window.addEventListener("load",function(){
 	initStage();
 	initEvent();
@@ -64,7 +71,7 @@ function initStage(){
 	stage.style.backgroundImage="url(/images/forest.png)";
 	stage.style.backgroundSize=width+"px "+height+"px";
 	stage.style.backgroundRepeat="repeat-x";//배경이 x방향으로 연속적이게 한다.
-	archer=new Archer(stage,80,80,100,350,"/images/ready01.png",level,score);
+	archer=new Archer(stage,80,80,100,350,level,score,await,arun,aready,alaunch);
 	archer.init();
 	form1.id.value=id_archer;
 	form1.level.value=level;
@@ -80,8 +87,19 @@ function keySet(){//아쳐 키보드 설정
 		case 65: go(-1); break;
 		case 87: jump(); break;
 		case 68: go(1); break;
-		case 32: power++; if(power>8){power=8;}break;
+		case 32: space();break;
 	}
+}
+function space(){
+	power++; 
+	booltable(false,false,true,false);
+	if(power>8){power=8;}
+}
+function booltable(a,b,c,d){
+	archer.iswait=a; 
+	archer.isrun=b;
+	archer.isready=c; 
+	archer.islaunch=d;
 }
 function initEvent(){//마우스와 아군의 거리를 체크한다.
 	stage.addEventListener("mousemove",function(){
@@ -90,10 +108,13 @@ function initEvent(){//마우스와 아군의 거리를 체크한다.
 	});
 }
 function fire(){//아쳐의 방향에 따라 화살의 방향을 결정한다.
+		archer.actionCount=0;
+		booltable(true,false,false,true);
 		if(direction==1){
-			arrow=new Arrow(stage,50,10,archer.x+50,archer.y+archer.height/2-10,direction,"/images/arrow.png",posX,posY,power);
+			arrow=new Arrow(stage,50,10,archer.x+30,archer.y+archer.height/2-20,direction,"/images/arrow.png",posX,posY,power);
 		}else{
-			arrow=new Arrow(stage,50,10,archer.x,archer.y+archer.height/2-10,direction,"/images/arrow.png",posX,posY,power);		}
+			arrow=new Arrow(stage,50,10,archer.x+10,archer.y+archer.height/2-20,direction,"/images/arrow.png",posX,posY,power);
+		}
 		arrow.init();
 		power=4;
 	}
@@ -104,6 +125,7 @@ function keyRec(){//키가 회복되었을 때 아쳐의 속도를 0으로 만�
 var key=event.keyCode;
 	if(key==65 || key==68){
 		archer.velX=0;
+		booltable(true,false,archer.isready,archer.islaunch);
 		step=0;
 	}
 	
@@ -117,12 +139,13 @@ function initBlock(){//맵
 		blockArray.push(block);
 	}
 function initEnemy(){//일정시간 마다 적이 나온다.
-	enemy=new Enemy(stage,90,80,width-100,height-250,wolfRun,wolfJump);
+	enemy=new Enemy(stage,90,80,width-100,height-400,wolfRun,wolfJump);
 	enemy.init();
 	enemyArray.push(enemy);
 	setTimeout("initEnemy()",10000);
 }
 function go(vel){//아쳐의 이동방향 점프를 결정한다.
+	booltable(false,true,archer.isready,archer.islaunch);
 	archer.velX=vel*2;
 	direction=vel;
 	step=0.5*vel;
@@ -136,7 +159,7 @@ function jump(){//아쳐의 점프 결정
 }
 function bgEffect(){//아쳐의 이동에 따라 배경의 이동을 보여 준다. 
 	setTimeout("bgEffect()",10);
-	vgX+=step;
+	vgX-=step;
 	stage.style.backgroundPosition=vgX+"px 0px";
 }
 function initDesc(){
@@ -162,8 +185,8 @@ function updateInfo(){
 		<div id="stage" >
 			<div name="info">
 				아이디 : <input type="text" name="id" ><br>
-				레벨 : <input type="text" name="level" ><br>
-				점수 : <input type="text" name="score" >
+				레벨&nbsp&nbsp&nbsp&nbsp: <input type="text" name="level" ><br>
+				점수&nbsp&nbsp&nbsp&nbsp: <input type="text" name="score" >
 			</div>
 		</div>
 	</form>

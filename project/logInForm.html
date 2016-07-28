@@ -4,6 +4,26 @@
 <meta charset="UTF-8">
 <title>logInForm</title>
 <style>
+body{
+	margin:0px;
+}
+div{
+	width:800px;
+	height:600px;
+	background-image:url("/images/login.jpg");
+}
+#tb{
+	width:300px;
+	height:100px;
+	position: absolute;
+	left:500px;
+	top:400px;
+	
+}
+input.text{
+	width:140px;
+}
+
 </style>
 <script>
 var bt_login;
@@ -46,21 +66,23 @@ function init(){
 </head>
 <body>
 	<form name="form1" method="post"  >
-		<table bgcolor="yellow" align="center">
-			<tr>
-				<td>아이디</td><td><input type="text" name="id"></td>
-			</tr>
-			<tr>
-				<td>비밀번호</td><td><input type="password" name="pwd"></td>
-			</tr>
-			<tr align="center">
-				<td colspan="2">
-					<input type="button" value="Log-In" id="bt_login">
-					<input type="button" value="Regist" id="bt_regit">
-					<input type="button" value="FindID" id="bt_find">
-				</td>
-			</tr>
-		</table>
+		<div>		
+			<table id="tb" >
+				<tr>
+					<td>아이디&nbsp&nbsp :</td><td><input type="text" name="id"></td>
+				</tr>
+				<tr>
+					<td>비밀번호 : </td><td><input type="password" name="pwd"></td>
+				</tr>
+				<tr align="center">
+					<td colspan="2">
+						<input type="button" value="Log-In" color="#ffffff" id="bt_login">
+						<input type="button" value="Regist" color="#ffffff" id="bt_regit">
+						<input type="button" value="FindID" color="#ffffff" id="bt_find">
+					</td>
+				</tr>
+			</table>
+		</div>
 	</form>
 </body>
 </html>

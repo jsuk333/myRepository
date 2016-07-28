@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>check</title>
+<style>
+body{
+	margin:0px;
+}
+div{
+	width:800px;
+	height:600px;
+	background-image:url("/images/login.jpg");
+}
+input.text{
+	position: absolute;
+	left:500px;
+	top:400px;
+	
+}
+</style>
+<script>
+function go(){
+	location.href="/loginForm";
+}
+</script>
+</head>
+<body>
+	<div id="stage" onclick="go()">
+		<input type="text" value="<%=id%>" ReadOnly>
+	</div>
+</body>
+</html>

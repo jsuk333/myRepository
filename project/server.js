@@ -93,6 +93,7 @@ app.route("/find").post(function(req,res){
 	var mm=data.mm;
 	var dd=data.dd;
 	var birth=yy+"/"+mm+"/"+dd;
+	var page=fs.readFileSync("./check.html","utf8");
 	client.query("select name,birth,id from gamer where name='"+name+"' and birth='"+birth+"';",function(error,records,field){
 		var data=records;
 		if(error){
@@ -101,13 +102,14 @@ app.route("/find").post(function(req,res){
 		}else{
 			if(data[0]!=undefined){
 				console.log("당신의 아이디는 "+data[0].id+"입니다.");
-				res.redirect("/logInForm");
+				res.end(ejs.render(page,{id:data[0].id}));
 			}else{
 				console.log("계정이 없습니다.");
 			}
 		}
 	});
 });
+
 
 app.route("/end").post(function(req,res){
 	var input=req.body;

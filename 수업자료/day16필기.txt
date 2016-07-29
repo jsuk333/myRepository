@@ -1,0 +1,11 @@
+client:request->
+			<-response:server
+client:store temporary data
+client:X		x:server
+
+기존의 자바스크립트 - 클라이언트에서만 동작하는 스크립트 언어
+nodejs는 실행 시점이 서버에서 실행되... 서버 스크립트
+
+모듈을 정의 할 수 있고, require
+내장 모듈 - url, querystring, os,fs.....
+외부 모듈 -npm install 모듈

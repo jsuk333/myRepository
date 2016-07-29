@@ -59,7 +59,7 @@ var Archer=function(stage,width,height,x,y,level,score,await,arun,aready,alunch)
 	this.move=function(){
 		this.st=setTimeout(function(){
 				me.move();
-		},10);
+		},50);
 		this.velY+=this.gravity;
 		if(this.velY>0){
 			this.jumping=false;

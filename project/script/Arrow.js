@@ -82,7 +82,7 @@ var Arrow=function(stage,width,height,x,y,direction,src,posX,posY,power){
 		this.img.style.top=this.y+"px";
 		this.st=setTimeout(function(){
 			me.move();
-		},10);
+		},50);
 	}
 	this.del=function(){
 		this.stage.removeChild(this.img);
